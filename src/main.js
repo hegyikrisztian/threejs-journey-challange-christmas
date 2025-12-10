@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
-
+import CANNON from 'cannon'
 
 /**
  * Setup
@@ -39,16 +39,65 @@ camera.position.x = -3
 camera.position.y = 2
 
 /**
+ * Physics
+ */
+const physicsWorld = new CANNON.World()
+physicsWorld.gravity.set(0, - 9.82, 0)
+
+// Sphere body
+const sphereShape = new CANNON.Sphere(0.5)
+const sphereBody = new CANNON.Body({
+  mass: 1,
+  position: new CANNON.Vec3(0, 3, 0),
+  shape: sphereShape
+})
+physicsWorld.addBody(sphereBody)
+
+// Floor body
+const floorShape = new CANNON.Sphere(0.5)
+const floorBody = new CANNON.Body({
+  mass: 0,
+  position: new CANNON.Vec3(0, - 1, 0),
+  shape: floorShape
+})
+physicsWorld.addBody(floorBody)
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
+scene.add(ambientLight)
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5)
+directionalLight.position.x = - 6
+directionalLight.position.y = 2
+directionalLight.castShadow = true
+scene.add(directionalLight)
+
+/**
  * Test cube
  */
-scene.add(
-  new THREE.Mesh(
-    new THREE.BoxGeometry(),
-    new THREE.MeshBasicMaterial({ color: "red" })
-  )
+const sphere = new THREE.Mesh(
+  new THREE.SphereGeometry(0.5, 32, 32),
+  new THREE.MeshStandardMaterial({ color: "white", metalness: 0.7, roughness: 0.5 })
 )
+sphere.castShadow = true
+scene.add(sphere)
+
+const floor = new THREE.Mesh(
+  new THREE.PlaneGeometry(0.5),
+  new THREE.MeshStandardMaterial({ color: "white", metalness: 0.7, roughness: 0.5 })
+)
+floor.receiveShadow = true
+floor.rotation.x = - Math.PI * 0.5
+floor.position.y = - 0.5
+floor.scale.x = 16
+floor.scale.y = 8
+scene.add(floor)
+
 
 const renderer = new THREE.WebGLRenderer({ canvas })
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setSize(sizes.width, sizes.height)
 
@@ -62,10 +111,17 @@ const tick = () => {
   const deltaTime = elapsedTime - previousTime
   previousTime = elapsedTime
 
+  // Update physics world
+  physicsWorld.step(1 / 60, deltaTime, 3)
+  sphere.position.copy(sphereBody.position)
+
+  // Update controls
   controls.update()
 
+  // Render
   renderer.render(scene, camera)
 
+  // Request next frame with tick
   window.requestAnimationFrame(tick)
 }
 
