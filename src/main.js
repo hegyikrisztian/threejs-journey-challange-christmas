@@ -1,10 +1,16 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/Addons.js'
 import CANNON from 'cannon'
+import GUI from 'lil-gui'
 
 /**
  * Setup
  */
+// Debug
+const gui = new GUI({
+  width: 300
+})
+
 const canvas = document.querySelector("#webgl")
 const sizes = {
   width: window.innerWidth,
@@ -34,9 +40,9 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 )
-camera.position.z = -4
-camera.position.x = -3
-camera.position.y = 2
+camera.position.z = 0
+camera.position.x = -7
+camera.position.y = 6
 
 /**
  * Physics
@@ -48,19 +54,55 @@ physicsWorld.gravity.set(0, - 9.82, 0)
 const sphereShape = new CANNON.Sphere(0.5)
 const sphereBody = new CANNON.Body({
   mass: 1,
-  position: new CANNON.Vec3(0, 3, 0),
+  position: new CANNON.Vec3(0, 0, 0),
   shape: sphereShape
 })
 physicsWorld.addBody(sphereBody)
 
 // Floor body
-const floorShape = new CANNON.Sphere(0.5)
+const floorShape = new CANNON.Plane(10)
 const floorBody = new CANNON.Body({
   mass: 0,
-  position: new CANNON.Vec3(0, - 1, 0),
+  position: new CANNON.Vec3(0, - 0.5, 0),
   shape: floorShape
 })
+floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI * 0.5)
 physicsWorld.addBody(floorBody)
+
+scene.add(new THREE.AxesHelper())
+
+/**
+ * Controls
+ */
+window.addEventListener("keydown", (event) => {
+
+  switch (event.key) {
+    case "w":
+      sphereBody.applyForce(new CANNON.Vec3(50, 0, 0), new CANNON.Vec3(0, 0, 0))
+      break
+    case "a":
+      break
+    case "d":
+      break
+    case "s":
+      sphereBody.applyForce(new CANNON.Vec3(-50, 0, 0), new CANNON.Vec3(0, 0, 0))
+      break
+    default:
+      break
+  }
+
+})
+window.addEventListener("keyup", (event) => {
+
+  if (event.key == "w" || event.key == "s") {
+    sphereBody.velocity.set(0, 0, 0)
+
+    /* TODO: reduce the velocity to 0 when stopping */
+  }
+
+})
+
+
 /**
  * Lights
  */
@@ -84,7 +126,7 @@ sphere.castShadow = true
 scene.add(sphere)
 
 const floor = new THREE.Mesh(
-  new THREE.PlaneGeometry(0.5),
+  new THREE.PlaneGeometry(5, 5),
   new THREE.MeshStandardMaterial({ color: "white", metalness: 0.7, roughness: 0.5 })
 )
 floor.receiveShadow = true
@@ -102,6 +144,9 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setSize(sizes.width, sizes.height)
 
 const controls = new OrbitControls(camera, canvas)
+controls.enabled = false
+gui.add(controls, 'enabled').name("controls")
+
 
 const clock = new THREE.Clock()
 let previousTime = 0;
