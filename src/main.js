@@ -50,56 +50,97 @@ camera.position.y = 6
 const physicsWorld = new CANNON.World()
 physicsWorld.gravity.set(0, - 9.82, 0)
 
-// Sphere body
-const sphereShape = new CANNON.Sphere(0.5)
-const sphereBody = new CANNON.Body({
-  mass: 1,
-  position: new CANNON.Vec3(0, 0, 0),
-  shape: sphereShape
+// Main body for sleigh
+const sleighBody = new CANNON.Body({
+  mass: 5,
+  angularDamping: 0.9,  // damping values should be between 0-1
+  linearDamping: 0.9,
+  position: new CANNON.Vec3(0, 0, 0)
 })
-physicsWorld.addBody(sphereBody)
 
-// Floor body
+// Shapes for sleigh
+const sleighChassyShape = new CANNON.Box(new CANNON.Vec3(1 * 0.5, 0.3 * 0.5, 0.5 * 0.5))
+const sleighRunnerShape = new CANNON.Box(new CANNON.Vec3(1.10 * 0.5, 0.1 * 0.5, 0.140 * 0.5))
+sleighBody.addShape(sleighChassyShape, new CANNON.Vec3(0, 0.15, 0))  // main body on top
+sleighBody.addShape(sleighRunnerShape, new CANNON.Vec3(0, 0.05, - 0.21))  // left runner 
+sleighBody.addShape(sleighRunnerShape, new CANNON.Vec3(0, 0.05, 0.21))  // right runner 
+
+sleighBody.updateMassProperties()
+
+// Offset center of mass
+// sleighBody.shapeOffsets.forEach(offset => {
+//   offset.y -= 0.3
+// })
+// sleighBody.updateMassProperties()
+
+physicsWorld.addBody(sleighBody)
+
+// Floor body with material for friction
+const groundMaterial = new CANNON.Material('ground')
 const floorShape = new CANNON.Plane(10)
 const floorBody = new CANNON.Body({
   mass: 0,
-  position: new CANNON.Vec3(0, - 0.5, 0),
-  shape: floorShape
+  position: new CANNON.Vec3(0, 0, 0),
+  shape: floorShape,
+  material: groundMaterial
 })
 floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(-1, 0, 0), Math.PI * 0.5)
 physicsWorld.addBody(floorBody)
 
-scene.add(new THREE.AxesHelper())
+// Box material
+const boxMaterial = new CANNON.Material('box')
+
+// Contact material (defines what happens when box touches ground)
+const boxGroundContactMaterial = new CANNON.ContactMaterial(
+  boxMaterial,
+  groundMaterial,
+  {
+    friction: 0.0,        // Low friction for sliding on snow
+    restitution: 0.0      // No bounce - sleigh stays on ground
+  }
+)
+physicsWorld.addContactMaterial(boxGroundContactMaterial)
+sleighBody.material = boxMaterial
+
+// scene.add(new THREE.AxesHelper())
+
+const accelerate = (magnitude) => {
+  // Get the sleigh's forward direction in world space
+  const localForward = new CANNON.Vec3(1, 0, 0)  // Local forward direction
+  const worldForward = new CANNON.Vec3()
+  
+  // Transform local forward to world space using sleigh's rotation
+  sleighBody.quaternion.vmult(localForward, worldForward)
+
+  // Apply force in the direction the sleigh is facing
+  sleighBody.applyForce(
+    worldForward.scale(magnitude),
+    sleighBody.position  // Apply at center of mass
+  )
+}
+
+const turn = (direction) => {
+  // Apply angular velocity to rotate the sleigh
+  // Positive = counter-clockwise (turn left), Negative = clockwise (turn right)
+  const turnSpeed = 2  // Adjust this for faster/slower turning
+  sleighBody.angularVelocity.y = direction * turnSpeed
+}
 
 /**
  * Controls
  */
+const inputs = {
+  KeyW: false,
+  KeyS: false,
+  KeyA: false,
+  KeyD: false,
+}
 window.addEventListener("keydown", (event) => {
-
-  switch (event.key) {
-    case "w":
-      sphereBody.applyForce(new CANNON.Vec3(50, 0, 0), new CANNON.Vec3(0, 0, 0))
-      break
-    case "a":
-      break
-    case "d":
-      break
-    case "s":
-      sphereBody.applyForce(new CANNON.Vec3(-50, 0, 0), new CANNON.Vec3(0, 0, 0))
-      break
-    default:
-      break
-  }
-
+  inputs[event.code] = true
 })
+
 window.addEventListener("keyup", (event) => {
-
-  if (event.key == "w" || event.key == "s") {
-    sphereBody.velocity.set(0, 0, 0)
-
-    /* TODO: reduce the velocity to 0 when stopping */
-  }
-
+  inputs[event.code] = false
 })
 
 
@@ -116,14 +157,39 @@ directionalLight.castShadow = true
 scene.add(directionalLight)
 
 /**
- * Test cube
+ * Test sleigh
  */
-const sphere = new THREE.Mesh(
-  new THREE.SphereGeometry(0.5, 32, 32),
-  new THREE.MeshStandardMaterial({ color: "white", metalness: 0.7, roughness: 0.5 })
+// Create a group to hold all sleigh parts
+const sleigh = new THREE.Group()
+scene.add(sleigh)
+
+// Main body (offset matches CANNON shape offset: 0, 0.15, 0)
+const sleighChassy = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 0.3, 0.5),
+  new THREE.MeshNormalMaterial({})
 )
-sphere.castShadow = true
-scene.add(sphere)
+sleighChassy.castShadow = true
+sleighChassy.position.set(0, 0.15, 0)
+sleigh.add(sleighChassy)
+
+// Left runner (offset matches CANNON shape offset: 0, 0.05, -0.21)
+const sleighRunnerLeft = new THREE.Mesh(
+  new THREE.BoxGeometry(1.10, 0.1, 0.140),
+  new THREE.MeshNormalMaterial({})
+)
+sleighRunnerLeft.castShadow = true
+sleighRunnerLeft.position.set(0, 0.05, -0.21)
+sleigh.add(sleighRunnerLeft)
+
+// Right runner (offset matches CANNON shape offset: 0, 0.05, 0.21)
+const sleighRunnerRight = new THREE.Mesh(
+  new THREE.BoxGeometry(1.10, 0.1, 0.140),
+  new THREE.MeshNormalMaterial({})
+)
+sleighRunnerRight.castShadow = true
+sleighRunnerRight.position.set(0, 0.05, 0.21)
+sleigh.add(sleighRunnerRight)
+
 
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(5, 5),
@@ -131,7 +197,6 @@ const floor = new THREE.Mesh(
 )
 floor.receiveShadow = true
 floor.rotation.x = - Math.PI * 0.5
-floor.position.y = - 0.5
 floor.scale.x = 16
 floor.scale.y = 8
 scene.add(floor)
@@ -144,7 +209,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setSize(sizes.width, sizes.height)
 
 const controls = new OrbitControls(camera, canvas)
-controls.enabled = false
+controls.enabled = true 
 gui.add(controls, 'enabled').name("controls")
 
 
@@ -158,7 +223,19 @@ const tick = () => {
 
   // Update physics world
   physicsWorld.step(1 / 60, deltaTime, 3)
-  sphere.position.copy(sphereBody.position)
+
+  // Move the sleigh forward/backward (in the direction it's facing)
+  if (inputs.KeyW) accelerate(30)      // Forward
+  if (inputs.KeyS) accelerate(-30)     // Backward
+  
+  // Turn the sleigh (rotate it)
+  if (inputs.KeyA) turn(1)       // Turn left (counter-clockwise)
+  else if (inputs.KeyD) turn(-1) // Turn right (clockwise)
+  else sleighBody.angularVelocity.y = 0  // Stop turning when key released
+
+  // Update sleigh group from physics body - all children move together!
+  sleigh.position.copy(sleighBody.position)
+  sleigh.quaternion.copy(sleighBody.quaternion)
 
   // Update controls
   controls.update()
