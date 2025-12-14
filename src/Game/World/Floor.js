@@ -7,6 +7,7 @@ export default class Floor {
     constructor() {
 
         this.game = new Game()
+        this.physicalWorld = this.game.physics
         this.scene = this.game.scene
         
         this.setGeometry()

@@ -141,7 +141,7 @@ const inputs = {
 window.addEventListener("keydown", (event) => {
   inputs[event.code] = true;
 });
-
+console.log(physicsWorld.bodies);
 window.addEventListener("keyup", (event) => {
   inputs[event.code] = false;
 });
