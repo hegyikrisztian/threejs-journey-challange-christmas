@@ -15,9 +15,6 @@ export default class PhysicalWorld extends EventEmitter {
         this.setWorld()
         this.setMaterials()
 
-        this.on("tick", () => {
-            this.update()
-        })
     }
     
     setWorld() {
@@ -37,30 +34,31 @@ export default class PhysicalWorld extends EventEmitter {
                 restitution: 0.0, // No bounce - sleigh stays on ground
             }
         )
-        this.world.addContactMaterial(groundMetalContactMaterial)
+        this.world.addContactMaterial(this.groundMetalContactMaterial)
     }
 
     addBody(body, name) {
 
         if (!body) {
             console.warn("body is required for PhysicalWorld.addBody")
+            return
         }
         if (!name || typeof name != "string") {
             console.warn("name is required for PhysicalWorld.addBody and should be of type 'string'")
+            return
         }
-        
+
         // Own array for easier identification in other components
         this.bodies.push({
             name: name,
             body: body
         })
 
-        // Add to cannon world
+        // Add to CANNON world
         this.world.addBody(body)
     }
 
     update() {
         this.world.step(1 / 60, this.time.delta, 3)
     }
-
 }

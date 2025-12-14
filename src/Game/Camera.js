@@ -1,3 +1,4 @@
+import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import Game from "./Game";
 
@@ -19,7 +20,7 @@ export default class Camera {
             35,
             this.aspectRatio,
             0.1,
-            10
+            100
         )
         this.instance.position.set(-7, 6, 0)
         this.game.scene.add(this.instance)

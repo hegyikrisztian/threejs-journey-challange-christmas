@@ -7,10 +7,10 @@ export default class Time extends EventEmitter {
         
         super()
 
-        this.start = new Date()
+        this.start = Date.now()
         this.current = this.start
         this.elapsed = 0
-        this.delta = 7
+        this.delta = 7  // Starting at 0 can cause bugs
 
         window.requestAnimationFrame(() => {
             this.tick()
@@ -19,8 +19,8 @@ export default class Time extends EventEmitter {
 
     tick() {
         const currentTime = Date.now()
-        this.current = currentTime
         this.delta = currentTime - this.current
+        this.current = currentTime
         this.elapsed = this.current - this.start
 
         this.trigger("tick")

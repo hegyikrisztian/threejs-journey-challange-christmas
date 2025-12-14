@@ -9,7 +9,7 @@ export default class Renderer {
         this.game = new Game()
         this.canvas = this.game.canvas
         this.scene = this.game.scene
-        this.camera = this.game.camera
+        this.camera = this.game.camera.instance
         this.sizes = this.game.sizes
 
         this.setInstance()
