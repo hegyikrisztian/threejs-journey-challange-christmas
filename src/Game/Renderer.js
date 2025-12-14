@@ -28,8 +28,8 @@ export default class Renderer {
     }
     
     resize() {
-        this.instance.setPixelRatio(this.sizes.pixelRatio)
         this.instance.setSize(this.sizes.width, this.sizes.height)
+        this.instance.setPixelRatio(this.sizes.pixelRatio)
     }
 
     update() {
