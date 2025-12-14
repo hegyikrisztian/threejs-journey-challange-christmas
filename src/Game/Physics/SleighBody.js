@@ -8,6 +8,7 @@ export default class SleighBody {
     constructor() {
         
         this.game = new Game()
+        this.time = this.game.time
         this.physicalWorld = this.game.physics
         this.inputs = this.game.inputs
 
@@ -68,6 +69,12 @@ export default class SleighBody {
     
     turn(direction) {
         const speed = 2
+        let _angularVelocityY = direction * speed
+
+        if (direction < 0) {
+            _angularVelocityY *= -1
+        }
+
         this.body.angularVelocity.y = direction * speed
     }
     

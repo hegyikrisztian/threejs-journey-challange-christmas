@@ -9,7 +9,6 @@ export default class Camera {
         this.game = new Game()
         this.sizes = this.game.sizes
         this.canvas = this.game.canvas
-        this.aspectRatio = this.sizes.width / this.sizes.height
 
         this.setInstance()
         this.setOrbitControls()
@@ -18,7 +17,7 @@ export default class Camera {
     setInstance() {
         this.instance = new THREE.PerspectiveCamera(
             35,
-            this.aspectRatio,
+            this.sizes.width / this.sizes.height,
             0.1,
             100
         )
@@ -32,8 +31,8 @@ export default class Camera {
     }
 
     resize() {
-        this.instance.ascpet = this.sizes.width / this.sizes.height
-        this.instance.updateProjectionMatrix() 
+        this.instance.aspect = this.sizes.width / this.sizes.height
+        this.instance.updateProjectionMatrix()
     }
 
     update() {
