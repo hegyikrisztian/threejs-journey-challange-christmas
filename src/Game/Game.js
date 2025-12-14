@@ -1,6 +1,7 @@
 import * as THREE from "three"
 import Camera from "./Camera"
 import Sizes from "./Utils/Sizes"
+import Renderer from "./Renderer"
 
 export default class Game {
 
@@ -16,5 +17,6 @@ export default class Game {
         this.scene = new THREE.Scene()
         this.camera = new Camera()
         this.sizes = new Sizes()
+        this.renderer = new Renderer()
     }
 }
