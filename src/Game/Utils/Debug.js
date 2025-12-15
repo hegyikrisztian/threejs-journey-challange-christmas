@@ -8,7 +8,7 @@ export default class Debug {
         this.active = window.location.hash.includes("#debug")
 
         if (this.active) {
-            this.ui = new GUI({ width: 400 })
+            this.ui = new GUI({ width: 200 })
         }
     }
 }

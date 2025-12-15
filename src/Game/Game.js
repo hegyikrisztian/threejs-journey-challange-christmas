@@ -50,7 +50,8 @@ export default class Game {
     update() {
         this.physics.update()
         this.world.update()
-        this.camera.update()
+
+        this.camera.update(this.world.sleigh.sleigh.position)
         this.renderer.update()
     }
 }

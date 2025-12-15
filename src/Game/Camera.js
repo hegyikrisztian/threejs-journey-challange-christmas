@@ -9,7 +9,12 @@ export default class Camera {
         this.game = new Game()
         this.sizes = this.game.sizes
         this.canvas = this.game.canvas
+        this.debug = this.game.debug
+        
 
+        if (this.debug.active) {
+            this.debugFolder = this.debug.ui.addFolder("Camera controls")
+        }
         this.setInstance()
         this.setOrbitControls()
     }
@@ -28,6 +33,10 @@ export default class Camera {
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
         this.controls.enableDamping = true
+
+        if (this.debug.active) {
+            this.debugFolder.add(this.controls, "enabled")
+        }
     }
 
     resize() {
@@ -35,7 +44,21 @@ export default class Camera {
         this.instance.updateProjectionMatrix()
     }
 
-    update() {
-        this.controls.update()
+    update(sleighPosition) {
+        if (this.controls.enabled) {
+            this.controls.update()
+        }
+        else {
+
+            // Follow the player
+            const _newPosition = new THREE.Vector3(
+                sleighPosition.x - 6,
+                sleighPosition.y + 6,
+                sleighPosition.z
+            )
+
+            this.instance.position.copy(_newPosition)
+            this.instance.lookAt(sleighPosition)
+        }
     }
 }
