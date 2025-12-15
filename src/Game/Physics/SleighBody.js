@@ -69,10 +69,10 @@ export default class SleighBody {
     
     turn(direction) {
         const speed = 2
-        let _angularVelocityY = direction * speed
 
-        if (direction < 0) {
-            _angularVelocityY *= -1
+        // Flip the sign when going backward
+        if (this.inputs.getIsKeyActive(KEYS.S)) {
+            direction *= - 1.0    
         }
 
         this.body.angularVelocity.y = direction * speed
