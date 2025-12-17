@@ -1,6 +1,6 @@
-import Game from "../Game";
 import Ground from "./Ground";
 import Sleigh from "./Sleigh";
+import PresentSpawner from './PresentSpawner';
 
 
 export default class World {
@@ -9,9 +9,11 @@ export default class World {
 
         this.ground = new Ground()
         this.sleigh = new Sleigh()
+        this.presentSpawner = new PresentSpawner()
     }
 
     update() {
         this.sleigh.update()
+        this.presentSpawner.update()
     }
 }
