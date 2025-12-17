@@ -54,29 +54,28 @@ export default class Present {
     }
 
     destroy() {
-        this.geometry.dispose()
-        this.material.dispose()
-        this.scene.remove(this.mesh)
-        
-        this.alive = false
+        gsap.to(
+            this.mesh.scale,
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: PRESENT_DEATH_OFFSET_SECONDS,
+                ease: "linear",
+                onComplete: () => {
+                    this.geometry.dispose()
+                    this.material.dispose()
+                    this.scene.remove(this.mesh)
+                    
+                    this.alive = false
+                }
+            }
+        )
     }
 
     update() {
         if (this.elapsed - this.start > PRESENT_LIFE_MILISECONDS) {
-            gsap.to(
-                this.mesh.scale,
-                {
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                    duration: PRESENT_DEATH_OFFSET_SECONDS,
-                    ease: "linear",
-                    onComplete: () => {
-                        this.destroy()
-                    }
-                }
-            )
-
+            this.destroy()
         }
         else {
             if (this.mesh.scale.equals(new THREE.Vector3(0, 0, 0))) {

@@ -23,9 +23,9 @@ export default class Sleigh extends EventEmitter {
     }
 
     setGroup() {
-        this.sleigh = new THREE.Group()
+        this.group = new THREE.Group()
 
-        this.scene.add(this.sleigh)
+        this.scene.add(this.group)
     }
 
     setChassy() {
@@ -36,7 +36,7 @@ export default class Sleigh extends EventEmitter {
         this.chassy.castShadow = true
         this.chassy.position.set(0, 0.15, 0)
 
-        this.sleigh.add(this.chassy)
+        this.group.add(this.chassy)
     }
 
     setRightRunner() {
@@ -47,7 +47,7 @@ export default class Sleigh extends EventEmitter {
         this.rightRunner.castShadow = true;
         this.rightRunner.position.set(0, 0.05, 0.21)
 
-        this.sleigh.add(this.rightRunner)
+        this.group.add(this.rightRunner)
     }
 
     setLeftRunner() {
@@ -58,7 +58,7 @@ export default class Sleigh extends EventEmitter {
         this.leftRunner.castShadow = true
         this.leftRunner.position.set(0, 0.05, -0.21)
 
-        this.sleigh.add(this.leftRunner)
+        this.group.add(this.leftRunner)
     }
 
     setPhysical() {
@@ -68,7 +68,7 @@ export default class Sleigh extends EventEmitter {
     update() {
         this.physical.update()
         
-        this.sleigh.position.copy(this.physical.body.position)
-        this.sleigh.quaternion.copy(this.physical.body.quaternion)
+        this.group.position.copy(this.physical.body.position)
+        this.group.quaternion.copy(this.physical.body.quaternion)
     }
 }
