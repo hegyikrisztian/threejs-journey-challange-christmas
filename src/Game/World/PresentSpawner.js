@@ -3,6 +3,8 @@ import Game from '../Game'
 import Present from './Present'
 
 
+const SPAWN_INTERVAL = 600
+
 export default class PresentSpawner {
 
     constructor() {
@@ -81,24 +83,53 @@ export default class PresentSpawner {
                 vector: new THREE.Vector2(6, 3)
             },
         ]
-        this.SPAWN_INTERVAL = 600
     }
 
     update() {
-        // Spawn a present every SPAWN_INTERVAL_SECONDS
         
-        if (this.elapsed % this.SPAWN_INTERVAL == 0) {
-        
-            // Find the first available position
-            const availablePosition = this.possiblePositions.find(p => p.available)
-            availablePosition.available = false
+        // Spawn a present every SPAWN_INTERVAL
+        if (this.elapsed % SPAWN_INTERVAL == 0) {
+
+            // Loop until we get and index that is both available and random
+            let randIndex
+
+            while (!this.possiblePositions.find((p, i) => p.available && i == randIndex)) {
+                randIndex =  Math.floor(0 + Math.random() * this.possiblePositions.length)
+            }
+
+            const availablePosition = this.possiblePositions.find((p, i) => p.available && i == randIndex)
             if (availablePosition) {
                 this.presents.push(new Present(availablePosition.vector))
+                availablePosition.available = false
             }
         }
 
-        // Always filter array based on present's life
-        this.presents = this.presents.filter(p => p.alive)
+        // Update presents
+        this.presents.forEach((p, i) => {
+            if (p.alive) {
+                p.update()
+            }
+            else {
+                
+                // Make position available again
+                const presentPosition = this.possiblePositions.find(_position => {
+
+                    const _vector = new THREE.Vector3(
+                        _position.vector.x,
+                        p.mesh.position.y,
+                        _position.vector.y,  // Since I store 2D positions in possiblePositions
+                    )
+
+                    return _vector.equals(p.mesh.position)
+                })
+
+                if (presentPosition) presentPosition.available = true
+
+                // Remove
+                this.presents.splice(i, 1)
+                
+            }
+        })
 
         this.elapsed++
     }

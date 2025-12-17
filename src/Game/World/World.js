@@ -1,6 +1,4 @@
-import * as THREE from 'three'
 import Ground from "./Ground";
-import Present from "./Present";
 import Sleigh from "./Sleigh";
 import PresentSpawner from './PresentSpawner';
 
