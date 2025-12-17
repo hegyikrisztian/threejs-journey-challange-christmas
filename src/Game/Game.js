@@ -31,7 +31,7 @@ export default class Game {
         this.physics = new PhysicalWorld()
         this.inputs = new Inputs()
         this.world = new World()
-
+        
         this.sizes.on("resize", () => {
             this.resize()
         })
@@ -51,7 +51,7 @@ export default class Game {
         this.physics.update()
         this.world.update()
 
-        this.camera.update(this.world.sleigh.sleigh.position)
+        this.camera.update(this.world.player.sleigh.group.position)
         this.renderer.update()
     }
 }

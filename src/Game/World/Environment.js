@@ -36,6 +36,7 @@ export default class Environment {
     }
 
     setDirectionalLight() {
+        this.scene.add(new THREE.AxesHelper())
         this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
         this.directionalLight.position.x = -6;
         this.directionalLight.position.y = 2;

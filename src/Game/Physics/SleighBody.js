@@ -44,12 +44,6 @@ export default class SleighBody {
         
         this.body.updateMassProperties();
         
-        // Offset center of mass
-        // body.shapeOffsets.forEach(offset => {
-        //   offset.y -= 0.3
-        // })
-        // body.updateMassProperties()
-        
         this.physicalWorld.addBody(this.body, "sleigh")
     }
 
@@ -80,6 +74,7 @@ export default class SleighBody {
     
     update() {
         
+        // Controls
         if (this.inputs.getIsKeyActive(KEYS.W)) {
             this.accelerate(15)
         }
