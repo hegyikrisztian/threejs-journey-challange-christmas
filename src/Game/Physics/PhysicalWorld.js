@@ -31,7 +31,7 @@ export default class PhysicalWorld extends EventEmitter {
             this.groundMaterial,
             {
                 friction: 0.0, // Low friction for sliding on snow
-                restitution: 0.0, // No bounce - sleigh stays on ground
+                restitution: 0.5, // No bounce - sleigh stays on ground
             }
         )
         this.world.addContactMaterial(this.groundMetalContactMaterial)

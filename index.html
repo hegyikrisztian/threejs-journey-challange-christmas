@@ -3,11 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=Titan+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/src/style.css">
     <title>Santa Minigame</title>
   </head>
   <body>
     <canvas id="webgl"></canvas>
+    <div class="owned-presents-counter">
+      <img src="./public/icons/gift.png" width="50" height="50"/>
+      <p>0</p>
+    </div>
     <script defer type="module" src="/src/main.js"></script>
   </body>
 </html>

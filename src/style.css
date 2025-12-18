@@ -8,3 +8,22 @@ body, html {
   width: 100vw;
   height: 100vh;
 }
+
+.owned-presents-counter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.owned-presents-counter > p {
+  font-size: 50px;
+  font-family: "Titan One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.877);
+  margin: 0;
+}

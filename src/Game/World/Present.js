@@ -19,6 +19,7 @@ export default class Present {
         this.alive = true
         this.start = Date.now()
         this.elapsed = Date.now()
+        this.pickable = true
 
         this.setGeometry()
         this.setMaterial()
@@ -54,6 +55,8 @@ export default class Present {
     }
 
     destroy() {
+        this.pickable = false
+        
         gsap.to(
             this.mesh.scale,
             {
