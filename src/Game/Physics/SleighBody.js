@@ -76,11 +76,11 @@ export default class SleighBody {
         
         // Controls
         if (this.inputs.getIsKeyActive(KEYS.W)) {
-            this.accelerate(15)
+            this.accelerate(20)
         }
 
         if (this.inputs.getIsKeyActive(KEYS.S)) {
-            this.accelerate(-15)
+            this.accelerate(-20)
         }
 
         if (this.inputs.getIsKeyActive(KEYS.A)) {

@@ -12,7 +12,15 @@ export default class Player {
         this.worldPresents = presentSpawner.presents
         this.sleigh = new Sleigh()
         this.ownedPresentsCount = 0
+        this.presentCounterElement = document.querySelector(".owned-presents-counter > p")
         
+    }
+
+    reset() {
+        this.sleigh.group.position.set(0, 0, 0)
+        this.sleigh.physical.body.position.set(0, 0, 0)
+        this.ownedPresentsCount = 0
+        this.presentCounterElement.innerHTML = 0
     }
 
     update() {
@@ -28,8 +36,9 @@ export default class Player {
             
             const isInVicinity = isInVicinityX && isInVicinityZ
             
-            if (_present.alive && isInVicinity) {
+            if (_present.pickable && isInVicinity) {
                 this.ownedPresentsCount++
+                this.presentCounterElement.innerHTML = this.ownedPresentsCount
                 _present.destroy()
             }
             
