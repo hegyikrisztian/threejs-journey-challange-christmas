@@ -2,7 +2,7 @@ import Game from '../Game'
 import Sleigh from './Sleigh'
 
 
-const VICINITY_THRESHOLD = 0.5
+const VICINITY_THRESHOLD = 1
 
 export default class Player {
 
@@ -12,6 +12,7 @@ export default class Player {
         this.worldPresents = presentSpawner.presents
         this.sleigh = new Sleigh()
         this.ownedPresentsCount = 0
+        this.deliveredPresentsCount = 0
         this.presentCounterElement = document.querySelector(".owned-presents-counter > p")
         
     }

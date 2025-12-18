@@ -25,16 +25,41 @@ export default class PhysicalWorld extends EventEmitter {
     setMaterials() {
         this.metalMaterial = new CANNON.Material("metal")
         this.groundMaterial = new CANNON.Material("ground")
+        this.wallMaterial = new CANNON.Material("wall")
 
+        // Sleigh <-> Ground
         this.groundMetalContactMaterial = new CANNON.ContactMaterial(
             this.metalMaterial,
             this.groundMaterial,
             {
-                friction: 0.0, // Low friction for sliding on snow
-                restitution: 0.5, // No bounce - sleigh stays on ground
+                friction: 0.0,
+                restitution: 0.0,
             }
         )
         this.world.addContactMaterial(this.groundMetalContactMaterial)
+        
+        // Sleigh <-> Wall
+        this.metalWallContactMaterial = new CANNON.ContactMaterial(
+            this.metalMaterial,
+            this.wallMaterial,
+            {
+                friction: 0.0,
+                restitution: 0.8,
+            }
+        )
+        this.world.addContactMaterial(this.metalWallContactMaterial)
+
+        // Wall <-> Ground
+        this.wallGroundContactMaterial = new CANNON.ContactMaterial(
+            this.wallMaterial,
+            this.groundMaterial,
+            {
+                friction: 0.0,
+                restitution: 0.0,
+            }
+        )
+        this.world.addContactMaterial(this.wallGroundContactMaterial)
+
     }
 
     addBody(body, name) {
