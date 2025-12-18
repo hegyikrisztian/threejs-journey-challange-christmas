@@ -11,6 +11,10 @@ export default class Present {
 
     constructor(position) {
 
+        if (!position.x || !position.y) {
+            throw new Error("Present needs (x, y) values to set position.")
+        }
+
         this.game = new Game()
         this.scene = this.game.scene
         this.time = this.game.time
@@ -36,11 +40,6 @@ export default class Present {
     }
 
     setInstance(position) {
-        
-        if (!position.x || !position.y) {
-            throw new Error("Present needs (x, y) values to set position.")
-        }
-        
         this.mesh = new THREE.Mesh(this.geometry, this.material)
 
         const _position = new THREE.Vector3(

@@ -1,6 +1,7 @@
 import Ground from "./Ground";
 import PresentSpawner from './PresentSpawner';
 import Player from "./Player";
+import PresentRequestor from "./PresentRequestor";
 
 
 export default class World {
@@ -10,10 +11,12 @@ export default class World {
         this.ground = new Ground()
         this.presentSpawner = new PresentSpawner()
         this.player = new Player(this.presentSpawner)
+        this.presentRequestor = new PresentRequestor()
     }
 
     update() {
         this.presentSpawner.update()
         this.player.update()
+        this.presentRequestor.update()
     }
 }
