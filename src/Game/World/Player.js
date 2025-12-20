@@ -1,20 +1,79 @@
+import gsap from 'gsap'
 import Game from '../Game'
 import Sleigh from './Sleigh'
 
 
-const VICINITY_THRESHOLD = 1
+const PRESENT_VICINITY_THRESHOLD = 1
 
 export default class Player {
 
-    constructor(presentSpawner) {
+    constructor(presentSpawner, presentRequestor) {
         
         this.game = new Game()
         this.worldPresents = presentSpawner.presents
+        this.worldHouses = presentRequestor.houses
         this.sleigh = new Sleigh()
         this.ownedPresentsCount = 0
         this.deliveredPresentsCount = 0
         this.presentCounterElement = document.querySelector(".owned-presents-counter > p")
         
+        // Deliver presents
+        window.addEventListener("keypress", (event) => {
+            
+            if (event.code == "Enter") {
+
+                this.worldHouses.forEach(_house => {
+
+                    // Use the house base for calculations
+                    // TODO* use house.model when model is in
+                    const houseVicinityThresholdX = 2
+                    const houseVicinityThresholdZ = 2
+
+                    const minX = _house.house.position.x - houseVicinityThresholdX
+                    const maxX = _house.house.position.x + houseVicinityThresholdX
+                    const isInVicinityX = this.sleigh.group.position.x >= minX && this.sleigh.group.position.x <= maxX
+
+                    const minZ = _house.house.position.z - houseVicinityThresholdZ
+                    const maxZ = _house.house.position.z + houseVicinityThresholdZ
+                    const isInVicinityZ = this.sleigh.group.position.z >= minZ && this.sleigh.group.position.z <= maxZ
+
+                    const isInVicinity = isInVicinityX && isInVicinityZ
+                    
+                    if (_house.isRecievingPresents && isInVicinity) {
+                        console.log(`I'm in vicinity of ${_house.id}`);
+                        // If player has no presents shake counter
+                        if (this.ownedPresentsCount == 0) {
+                            gsap.to(
+                                ".owned-presents-counter > p",
+                                {
+                                    x: "+=5",
+                                    repeat: 5,
+                                    yoyo: true,
+                                    duration: 0.1
+                                }
+                            )
+                            gsap.to(
+                                ".owned-presents-counter > p",
+                                {
+                                    x: "-=5",
+                                    repeat: 5,
+                                    yoyo: true,
+                                    duration: 0.1
+                                }
+                            )
+                        }
+
+                        const availablePresents = Math.min(this.ownedPresentsCount, _house.requestedPresentsCount)
+                        _house.recievedPresentsCount += availablePresents
+                        
+                        this.ownedPresentsCount -= availablePresents
+                        this.presentCounterElement.innerHTML = this.ownedPresentsCount
+                    }
+                    
+                })
+            }
+        })
+
     }
 
     reset() {
@@ -27,12 +86,12 @@ export default class Player {
     update() {
         this.worldPresents.forEach(_present => {
 
-            const minX = _present.mesh.position.x - VICINITY_THRESHOLD
-            const maxX = _present.mesh.position.x + VICINITY_THRESHOLD
+            const minX = _present.mesh.position.x - PRESENT_VICINITY_THRESHOLD
+            const maxX = _present.mesh.position.x + PRESENT_VICINITY_THRESHOLD
             const isInVicinityX = this.sleigh.group.position.x >= minX && this.sleigh.group.position.x <= maxX
             
-            const minZ = _present.mesh.position.z - VICINITY_THRESHOLD
-            const maxZ = _present.mesh.position.z + VICINITY_THRESHOLD
+            const minZ = _present.mesh.position.z - PRESENT_VICINITY_THRESHOLD
+            const maxZ = _present.mesh.position.z + PRESENT_VICINITY_THRESHOLD
             const isInVicinityZ = this.sleigh.group.position.z >= minZ && this.sleigh.group.position.z <= maxZ
             
             const isInVicinity = isInVicinityX && isInVicinityZ
@@ -44,6 +103,7 @@ export default class Player {
             }
             
         })
+
 
         this.sleigh.update()
     }

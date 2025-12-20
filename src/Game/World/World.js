@@ -10,8 +10,8 @@ export default class World {
 
         this.ground = new Ground()
         this.presentSpawner = new PresentSpawner()
-        this.player = new Player(this.presentSpawner)
         this.presentRequestor = new PresentRequestor()
+        this.player = new Player(this.presentSpawner, this.presentRequestor)
     }
 
     update() {

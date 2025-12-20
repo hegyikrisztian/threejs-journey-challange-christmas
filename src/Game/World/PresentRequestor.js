@@ -2,15 +2,18 @@ import Game from "../Game";
 import House from "./House";
 
 
-const REQUEST_INTERVAL = 600
-const MAX_REQUESTORS_COUNT = 4
-
 export default class PresentRequestor {
 
     constructor() {
 
         this.game = new Game()
         this.elapsed = 0
+
+        // Store these 2 values inside class, to change it as game goes on
+        // to increase difficulty
+        this.requestInterval = 600
+        this.maxRequestorCount = 4
+
         this.houses = [
             new House({ x: 5, y: 5 }),
             new House({ x: 1, y: -3 }),
@@ -27,7 +30,7 @@ export default class PresentRequestor {
     update() {
         // Make a house request presents every SPAWN_INTERVAL
         const requestingHouses = this.houses.filter(h => h.isRecievingPresents)
-        if (this.elapsed % REQUEST_INTERVAL == 0 && requestingHouses.length < MAX_REQUESTORS_COUNT) {
+        if (this.elapsed % this.requestInterval == 0 && requestingHouses.length < this.maxRequestorCount) {
             // Pick a random house
             let randIndex
 
@@ -41,8 +44,10 @@ export default class PresentRequestor {
                 house.requestedPresentsCount = 1 + Math.trunc(Math.random() * 6)
             }
 
-            console.log(`I'm a new house ${house.physical.id} and requesting ${house.requestedPresentsCount} presents`);
+            console.log("I'm a new house requesting ", house.requestedPresentsCount);
         }
+
+        this.houses.forEach(h => h.isRecievingPresents && h.update())
 
         this.elapsed++
     }
