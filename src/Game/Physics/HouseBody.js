@@ -4,12 +4,12 @@ import CANNON from "cannon"
 
 export default class HouseBody {
 
-     constructor(position) {
+     constructor(position, id) {
             
         this.game = new Game()
         this.physicalWorld = this.game.physics
         this.position = new CANNON.Vec3().copy(position)  // Unify position
-        this.id = Math.trunc(Math.random() * 10)
+        this.id = id
 
         this.setShape()
         this.setBody()
