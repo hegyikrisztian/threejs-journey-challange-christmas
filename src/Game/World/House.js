@@ -89,7 +89,7 @@ export default class House {
             this.position.y + 1.4,
             this.position.z
         )
-        this.scoreboard.scale.multiplyScalar(0)
+        // this.scoreboard.scale.multiplyScalar(0)
         this.scoreboard.lookAt(this.camera.instance.position)
 
         this.scene.add(this.scoreboard)
@@ -125,9 +125,31 @@ export default class House {
                 )
             }
             else {
+                this.canvas.context.clearRect(0, 0, this.canvas.element.width, this.canvas.element.height)
                 this.canvas.context.fillText(text, 0, 225)
                 this.canvasTexture.needsUpdate = true
             }
+        }
+
+        if (this.requestedPresentsCount == this.recievedPresentsCount) {
+            gsap.to(
+                this.scoreboard.scale,
+                {
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                    duration: 0.5,
+                    ease: "elastic.inOut(1,0.75)",
+                    onComplete: () => {
+                        this.canvas.context.clearRect(0, 0, this.canvas.element.width, this.canvas.element.height)
+                        this.canvasTexture.needsUpdate = true
+                    }
+                }
+            )
+
+            // Reset
+            this.isRecievingPresents = false
+            this.recievedPresentsCount = 0
         }
     }
 }
