@@ -6,7 +6,7 @@ export default class GameTimer {
     constructor() {
         
         this.game = new Game()
-        this.gameTimeSeconds = 30
+        this.gameTimeSeconds = 60
         this.isPasued = false
         this.isStarted = false
         this.isEnded = false
@@ -35,7 +35,7 @@ export default class GameTimer {
     }
 
     reset() {
-        this.gameTimeSeconds = 5
+        this.gameTimeSeconds = 60
     }
     
     clear() {
