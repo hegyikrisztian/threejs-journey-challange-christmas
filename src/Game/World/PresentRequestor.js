@@ -27,6 +27,10 @@ export default class PresentRequestor {
         
     }
 
+    reset() {
+        this.houses.forEach(h => h.reset())
+    }
+
     update() {
         // Make a house request presents every SPAWN_INTERVAL
         const requestingHouses = this.houses.filter(h => h.isRecievingPresents)

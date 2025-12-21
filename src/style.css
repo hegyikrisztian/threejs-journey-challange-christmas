@@ -23,9 +23,24 @@ body, html {
 .game-time {
   font-size: 60px;
   font-family: "Titan One", sans-serif;
-  color: rgba(255, 255, 255, 0.877);
+  color: #ffffff;
   font-weight: 400;
   font-style: normal;
+}
+
+.bonus-time {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  top: 10px;
+  left: 60%;
+  font-size: 60px;
+  font-family: "Titan One", sans-serif;
+  color: #ffffff;
+  font-weight: 400;
+  opacity: 0;
 }
 
 .owned-presents-counter {
@@ -42,7 +57,7 @@ body, html {
   font-family: "Titan One", sans-serif;
   font-weight: 400;
   font-style: normal;
-  color: rgba(255, 255, 255, 0.877);
+  color: #ffffff;
   margin: 0;
   transform-origin: 10% 50%;
 }
@@ -109,7 +124,7 @@ button:hover {
   z-index: 2;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 500%);
+  transform: translate(-50%, 1000%);
   font-family: "Titan One", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -132,7 +147,7 @@ button:hover {
   z-index: 2;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 500%);
+  transform: translate(-50%, 1000%);
   font-family: "Titan One", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -150,3 +165,4 @@ button:hover {
   font-weight: 100;
   color: white;
 }
+

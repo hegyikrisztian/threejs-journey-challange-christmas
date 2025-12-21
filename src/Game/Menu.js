@@ -8,16 +8,13 @@ export default class Menu {
 
         this.game = new Game()
         this.gameTimer = this.game.gameTimer
-        this.world = this.game.world
-        this.player = this.world.player
         
         this.playButtonElement = document.querySelector(".btn-play")
         this.continueButtonElement = document.querySelector(".btn-continue")
         this.endMenuElement = document.querySelector(".end-menu-wrapper > span")
         this.playAgainButtonElement = document.querySelector(".end-menu-wrapper > button")
-
+        
         this.setPlayButton()
-        this.setPause()
         this.setContinueButton()
         this.setPlayAgainButton()
     }
@@ -69,7 +66,7 @@ export default class Menu {
             throw new Error("Wrong parameters for handleMenu")
         }
 
-        const _translateY = action == "show" ? -60 : 500
+        const _translateY = action == "show" ? -60 : 1000
         gsap.to(
             target,
             {
@@ -86,20 +83,10 @@ export default class Menu {
             this.handleMenu(".menu-wrapper", "hide")
             this.hideBackdrop()
 
+            // Blur the button to remove focus
+            this.playButtonElement.blur()
             this.game.start()            
         }
-    }
-    
-    // Pause
-    setPause() {
-        window.addEventListener("keydown", (event) => {
-            if (event.code == "Escape" && this.game.isPlaying()) {
-                this.showBackdrop()
-                this.handleMenu(".pause-menu-wrapper", "show")
-
-                this.game.pause()
-            }
-        })
     }
 
     // Continue
@@ -108,16 +95,19 @@ export default class Menu {
             this.handleMenu(".pause-menu-wrapper", "hide")
             this.hideBackdrop()
 
+            // Blur the button to remove focus
+            this.continueButtonElement.blur()
             this.game.continue()
         }
     }
 
     // End
-    showEndMenu() {
+    showEndMenu(deliveredPresents) {
         this.showBackdrop()
         this.handleMenu(".end-menu-wrapper", "show")
 
-        this.endMenuElement.innerHTML = `You delivered ${this.player.deliveredPresentsCount} presents!`
+        const _innerHtml = deliveredPresents > 0 ? `You delivered ${deliveredPresents} presents!` : "Nobody got presents :("
+        this.endMenuElement.innerHTML = _innerHtml
     }
 
     // Play again
@@ -126,6 +116,8 @@ export default class Menu {
             this.handleMenu(".end-menu-wrapper", "hide")
             this.hideBackdrop()
 
+            // Blur the button to remove focus
+            this.playAgainButtonElement.blur()
             this.game.start()    
         }
     }

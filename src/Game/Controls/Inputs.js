@@ -1,3 +1,4 @@
+import Game from "../Game"
 
 
 export const KEYS = {
@@ -5,11 +6,18 @@ export const KEYS = {
     S: "KeyS",
     A: "KeyA",
     D: "KeyD",
+    Esc: "Escape",
+    Enter: "Enter"
 }
+
+const sleighControlKeys = [KEYS.W, KEYS.S, KEYS.A, KEYS.D]
 
 export default class Inputs {
 
     constructor() {
+
+        this.game = new Game()
+        this.menu = this.game.menu
 
         this.keyboardInputs = {
             KeyW: false,
@@ -19,11 +27,24 @@ export default class Inputs {
         }
 
         window.addEventListener("keydown", (event) => {
-            this.setKey(event.code, true)
-        })
 
+            // Activate sleigh controls
+            if (sleighControlKeys.includes(event.code)) {
+                this.setKey(event.code, true)
+            }
+
+            // Pause game
+            if (event.code == "Escape" && this.game.isPlaying()) {
+                this.game.pause()
+            }
+        })
+        
         window.addEventListener("keyup", (event) => {
-            this.setKey(event.code, false)
+
+            // Deactivate sleigh controls
+            if (sleighControlKeys.includes(event.code)) {
+                this.setKey(event.code, false)
+            }
         })
     }
 

@@ -36,9 +36,9 @@ export default class Game {
         this.renderer = new Renderer()
         this.environment = new Environment()
         this.physics = new PhysicalWorld()
+        this.menu = new Menu()
         this.inputs = new Inputs()
         this.world = new World()
-        this.menu = new Menu()
         
         this.sizes.on("resize", () => {
             this.resize()
@@ -47,6 +47,10 @@ export default class Game {
         this.time.on("tick", () => {
             this.update()
         })
+
+        window.addEventListener("visibilitychange", () => {
+            if (this.isPlaying()) this.pause()
+        })
     }
 
     start() {
@@ -54,12 +58,16 @@ export default class Game {
         this.isStarted = true
         this.isEnded = false
         this.isPasued = false
-
+        
         this.gameTimer.start()
         this.world.reset()
+        this.canvas.focus()
     }
 
     pause() {
+        this.menu.showBackdrop()
+        this.menu.handleMenu(".pause-menu-wrapper", "show")
+
         this.isPasued = true
     }
 
@@ -69,7 +77,7 @@ export default class Game {
 
     end() {
         this.isEnded = true
-        this.menu.showEndMenu()
+        this.menu.showEndMenu(this.world.player.deliveredPresentsCount)
     }
 
     isPlaying() {
