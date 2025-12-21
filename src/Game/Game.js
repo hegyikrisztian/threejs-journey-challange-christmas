@@ -8,6 +8,8 @@ import Time from "./Utils/Time"
 import Inputs from "./Controls/Inputs"
 import Environment from "./World/Environment"
 import World from "./World/World"
+import GameTimer from "./GameTimer"
+import Menu from "./Menu"
 
 
 export default class Game {
@@ -20,12 +22,18 @@ export default class Game {
         }
         Game.instance = this
 
+        this.isStarted = false
+        this.isEnded = false
+        this.isPasued = false
+
         this.canvas = canvas
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.scene = new THREE.Scene()
         this.camera = new Camera()
         this.time = new Time()
+        this.gameTimer = new GameTimer()
+        this.menu = new Menu()
         this.renderer = new Renderer()
         this.environment = new Environment()
         this.physics = new PhysicalWorld()
@@ -48,8 +56,12 @@ export default class Game {
     }
 
     update() {
-        this.physics.update()
-        this.world.update()
+        if (this.isStarted && !this.isPasued) {
+            console.log("Im updating");
+            this.physics.update()
+            this.world.update()
+
+        }
 
         this.camera.update(this.world.player.sleigh.group.position)
         this.renderer.update()

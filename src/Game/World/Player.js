@@ -63,7 +63,9 @@ export default class Player {
                             )
                         }
 
-                        const availablePresents = Math.min(this.ownedPresentsCount, _house.requestedPresentsCount)
+                        const maxDeliverablePresents = _house.requestedPresentsCount - _house.recievedPresentsCount
+                        const availablePresents = Math.min(this.ownedPresentsCount, maxDeliverablePresents)
+                        
                         _house.recievedPresentsCount += availablePresents
                         
                         this.deliveredPresentsCount += availablePresents
