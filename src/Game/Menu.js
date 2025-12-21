@@ -106,7 +106,8 @@ export default class Menu {
         this.showBackdrop()
         this.handleMenu(".end-menu-wrapper", "show")
 
-        this.endMenuElement.innerHTML = `You delivered ${deliveredPresents} presents!`
+        const _innerHtml = deliveredPresents > 0 ? `You delivered ${deliveredPresents} presents!` : "Nobody got presents :("
+        this.endMenuElement.innerHTML = _innerHtml
     }
 
     // Play again

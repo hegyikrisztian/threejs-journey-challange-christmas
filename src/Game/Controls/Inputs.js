@@ -35,9 +35,6 @@ export default class Inputs {
 
             // Pause game
             if (event.code == "Escape" && this.game.isPlaying()) {
-                this.menu.showBackdrop()
-                this.menu.handleMenu(".pause-menu-wrapper", "show")
-
                 this.game.pause()
             }
         })

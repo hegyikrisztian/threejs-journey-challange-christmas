@@ -47,6 +47,10 @@ export default class Game {
         this.time.on("tick", () => {
             this.update()
         })
+
+        window.addEventListener("visibilitychange", () => {
+            if (this.isPlaying()) this.pause()
+        })
     }
 
     start() {
@@ -61,6 +65,9 @@ export default class Game {
     }
 
     pause() {
+        this.menu.showBackdrop()
+        this.menu.handleMenu(".pause-menu-wrapper", "show")
+
         this.isPasued = true
     }
 
