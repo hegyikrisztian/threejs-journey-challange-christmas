@@ -15,6 +15,7 @@ export default class World {
     }
 
     reset() {
+        this.presentRequestor.reset()
         this.player.reset()
     }
 

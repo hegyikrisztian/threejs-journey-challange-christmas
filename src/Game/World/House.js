@@ -102,6 +102,29 @@ export default class House {
         this.physical = new HouseBody(this.position, this.id)
     }
 
+    reset() {
+        this.isRecievingPresents = false
+        this.recievedPresentsCount = 0
+        this.resetScoreboard()
+    }
+
+    resetScoreboard() {
+        gsap.to(
+            this.scoreboard.scale,
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 0.5,
+                ease: "elastic.inOut(1,0.75)",
+                onComplete: () => {
+                    this.canvas.context.clearRect(0, 0, this.canvas.element.width, this.canvas.element.height)
+                    this.canvasTexture.needsUpdate = true
+                }
+            }
+        )
+    }
+
     update() {
 
         if (this.isRecievingPresents) {
@@ -133,21 +156,8 @@ export default class House {
         }
 
         if (this.requestedPresentsCount == this.recievedPresentsCount) {
-            gsap.to(
-                this.scoreboard.scale,
-                {
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                    duration: 0.5,
-                    ease: "elastic.inOut(1,0.75)",
-                    onComplete: () => {
-                        this.canvas.context.clearRect(0, 0, this.canvas.element.width, this.canvas.element.height)
-                        this.canvasTexture.needsUpdate = true
-                    }
-                }
-            )
-
+            this.resetScoreboard()
+            
             gsap.set(
                 ".bonus-time",
                 {
