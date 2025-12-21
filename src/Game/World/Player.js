@@ -40,7 +40,7 @@ export default class Player {
                     const isInVicinity = isInVicinityX && isInVicinityZ
                     
                     if (_house.isRecievingPresents && isInVicinity) {
-                        console.log(`I'm in vicinity of ${_house.id}`);
+
                         // If player has no presents shake counter
                         if (this.ownedPresentsCount == 0) {
                             gsap.to(
@@ -66,6 +66,8 @@ export default class Player {
                         const availablePresents = Math.min(this.ownedPresentsCount, _house.requestedPresentsCount)
                         _house.recievedPresentsCount += availablePresents
                         
+                        this.deliveredPresentsCount += availablePresents
+
                         this.ownedPresentsCount -= availablePresents
                         this.presentCounterElement.innerHTML = this.ownedPresentsCount
                     }
@@ -80,6 +82,7 @@ export default class Player {
         this.sleigh.group.position.set(0, 0, 0)
         this.sleigh.physical.body.position.set(0, 0, 0)
         this.ownedPresentsCount = 0
+        this.deliveredPresentsCount = 0
         this.presentCounterElement.innerHTML = 0
     }
 
@@ -103,7 +106,6 @@ export default class Player {
             }
             
         })
-
 
         this.sleigh.update()
     }
