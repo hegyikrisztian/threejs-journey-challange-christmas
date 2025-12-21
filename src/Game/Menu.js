@@ -13,7 +13,7 @@ export default class Menu {
         this.continueButtonElement = document.querySelector(".btn-continue")
         this.endMenuElement = document.querySelector(".end-menu-wrapper > span")
         this.playAgainButtonElement = document.querySelector(".end-menu-wrapper > button")
-
+        
         this.setPlayButton()
         this.setContinueButton()
         this.setPlayAgainButton()
@@ -83,6 +83,8 @@ export default class Menu {
             this.handleMenu(".menu-wrapper", "hide")
             this.hideBackdrop()
 
+            // Blur the button to remove focus
+            this.playButtonElement.blur()
             this.game.start()            
         }
     }
@@ -93,6 +95,8 @@ export default class Menu {
             this.handleMenu(".pause-menu-wrapper", "hide")
             this.hideBackdrop()
 
+            // Blur the button to remove focus
+            this.continueButtonElement.blur()
             this.game.continue()
         }
     }
@@ -111,6 +115,8 @@ export default class Menu {
             this.handleMenu(".end-menu-wrapper", "hide")
             this.hideBackdrop()
 
+            // Blur the button to remove focus
+            this.playAgainButtonElement.blur()
             this.game.start()    
         }
     }

@@ -57,6 +57,7 @@ export default class Game {
 
         this.gameTimer.start()
         this.world.reset()
+        this.canvas.focus()
     }
 
     pause() {
@@ -69,7 +70,8 @@ export default class Game {
 
     end() {
         this.isEnded = true
-        this.menu.showEndMenu()
+        this.menu.showEndMenu(this.world.player.deliveredPresentsCount)
+        
     }
 
     isPlaying() {

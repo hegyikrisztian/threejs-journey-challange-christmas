@@ -148,6 +148,25 @@ export default class House {
                 }
             )
 
+            gsap.set(
+                ".bonus-time",
+                {
+                    opacity: 1,
+                    transform: "unset"
+                }
+            )
+
+            gsap.to(
+                ".bonus-time",
+                {
+                    opacity: 0,
+                    translateY: 60,
+                    duration: 0.7,
+                    delay: 0.2,
+                    ease: "back.inOut"
+                }
+            )
+
             // Add time to game timer
             this.gameTimer.addTime(6)
 
