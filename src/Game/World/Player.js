@@ -81,6 +81,7 @@ export default class Player {
     }
 
     reset() {
+        // debugger
         this.sleigh.group.position.set(0, 0, 0)
         this.sleigh.physical.body.position.set(0, 0, 0)
         this.ownedPresentsCount = 0

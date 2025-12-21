@@ -14,6 +14,10 @@ export default class World {
         this.player = new Player(this.presentSpawner, this.presentRequestor)
     }
 
+    reset() {
+        this.player.reset()
+    }
+
     update() {
         this.presentSpawner.update()
         this.player.update()

@@ -33,12 +33,12 @@ export default class Game {
         this.camera = new Camera()
         this.time = new Time()
         this.gameTimer = new GameTimer()
-        this.menu = new Menu()
         this.renderer = new Renderer()
         this.environment = new Environment()
         this.physics = new PhysicalWorld()
         this.inputs = new Inputs()
         this.world = new World()
+        this.menu = new Menu()
         
         this.sizes.on("resize", () => {
             this.resize()
@@ -49,6 +49,33 @@ export default class Game {
         })
     }
 
+    start() {
+        // asdasd
+        this.isStarted = true
+        this.isEnded = false
+        this.isPasued = false
+
+        this.gameTimer.start()
+        this.world.reset()
+    }
+
+    pause() {
+        this.isPasued = true
+    }
+
+    continue() {
+        this.isPasued = false
+    }
+
+    end() {
+        this.isEnded = true
+        this.menu.showEndMenu()
+    }
+
+    isPlaying() {
+        return this.isStarted && !this.isPasued && !this.isEnded
+    }
+
     // We call resize here, to be able to control the order
     resize() {
         this.camera.resize()
@@ -56,11 +83,10 @@ export default class Game {
     }
 
     update() {
-        if (this.isStarted && !this.isPasued) {
-            console.log("Im updating");
+        if (this.isPlaying()) {
             this.physics.update()
             this.world.update()
-
+            this.gameTimer.update()
         }
 
         this.camera.update(this.world.player.sleigh.group.position)

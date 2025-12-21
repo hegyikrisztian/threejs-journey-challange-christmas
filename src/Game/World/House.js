@@ -14,6 +14,7 @@ export default class House {
         }
 
         this.game = new Game()
+        this.gameTimer = this.game.gameTimer
         this.scene = this.game.scene
         this.camera = this.game.camera
         this.position = new THREE.Vector3().copy({
@@ -146,6 +147,9 @@ export default class House {
                     }
                 }
             )
+
+            // Add time to game timer
+            this.gameTimer.addTime(6)
 
             // Reset
             this.isRecievingPresents = false

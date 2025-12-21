@@ -9,18 +9,36 @@ body, html {
   height: 100vh;
 }
 
-.owned-presents-counter {
+.game-bar-wrapper {
   display: flex;
-  gap: 10px;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  width: 55%;
+  justify-content: space-between;
   position: absolute;
   top: 10px;
   left: 10px;
 }
 
+.game-time {
+  font-size: 60px;
+  font-family: "Titan One", sans-serif;
+  color: rgba(255, 255, 255, 0.877);
+  font-weight: 400;
+  font-style: normal;
+}
+
+.owned-presents-counter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  top: 10px;
+  left: 10px;
+}
+
 .owned-presents-counter > p {
-  font-size: 50px;
+  font-size: 60px;
   font-family: "Titan One", sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -99,6 +117,36 @@ button:hover {
 
 .pause-menu-wrapper p {
   margin: 0;
-  font-size: 60px;
+  font-size: 80px;
+  color: white;
+}
+
+.end-menu-wrapper {
+  position: absolute;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 500%);
+  font-family: "Titan One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.end-menu-wrapper > p {
+  margin: 0;
+  font-size: 80px;
+  color: white;
+}
+
+.end-menu-wrapper > span {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 100;
   color: white;
 }
