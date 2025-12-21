@@ -11,10 +11,36 @@
   </head>
   <body>
     <canvas id="webgl"></canvas>
-    <div class="owned-presents-counter">
-      <img src="./public/icons/gift.png" width="50" height="50"/>
-      <p>0</p>
+i    <script defer type="module" src="/src/main.js"></script>
+    
+    <div class="menu-backdrop"></div>
+    
+    <div class="game-bar-wrapper">
+      <div class="owned-presents-counter">
+        <img src="./public/icons/gift.png" width="50" height="50"/>
+        <p>0</p>
+      </div>
+      <div class="game-time">01:00</div>
     </div>
-    <script defer type="module" src="/src/main.js"></script>
+
+    <div class="menu-wrapper">
+      <title>Santa Minigame</title>
+      <menu>
+        <button class="btn-play">Play!</button>
+        <button class="btn-tutorial">How to play</button>
+      </menu>
+    </div>
+
+    <div class="pause-menu-wrapper">
+      <p>Game paused!</p>
+      <button class="btn-continue">Continue</button>
+    </div>
+
+    <div class="end-menu-wrapper">
+      <p>Game over!</p>
+      <span>You have delivered 0 presents!</span>
+      <button class="btn-continue">Play again!</button>
+    </div>
+
   </body>
 </html>

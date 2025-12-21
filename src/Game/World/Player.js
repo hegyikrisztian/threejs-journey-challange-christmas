@@ -63,7 +63,9 @@ export default class Player {
                             )
                         }
 
-                        const availablePresents = Math.min(this.ownedPresentsCount, _house.requestedPresentsCount)
+                        const maxDeliverablePresents = _house.requestedPresentsCount - _house.recievedPresentsCount
+                        const availablePresents = Math.min(this.ownedPresentsCount, maxDeliverablePresents)
+                        
                         _house.recievedPresentsCount += availablePresents
                         
                         this.deliveredPresentsCount += availablePresents
@@ -79,6 +81,7 @@ export default class Player {
     }
 
     reset() {
+        // debugger
         this.sleigh.group.position.set(0, 0, 0)
         this.sleigh.physical.body.position.set(0, 0, 0)
         this.ownedPresentsCount = 0

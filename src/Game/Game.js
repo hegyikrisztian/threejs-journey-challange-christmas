@@ -8,6 +8,8 @@ import Time from "./Utils/Time"
 import Inputs from "./Controls/Inputs"
 import Environment from "./World/Environment"
 import World from "./World/World"
+import GameTimer from "./GameTimer"
+import Menu from "./Menu"
 
 
 export default class Game {
@@ -20,17 +22,23 @@ export default class Game {
         }
         Game.instance = this
 
+        this.isStarted = false
+        this.isEnded = false
+        this.isPasued = false
+
         this.canvas = canvas
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.scene = new THREE.Scene()
         this.camera = new Camera()
         this.time = new Time()
+        this.gameTimer = new GameTimer()
         this.renderer = new Renderer()
         this.environment = new Environment()
         this.physics = new PhysicalWorld()
         this.inputs = new Inputs()
         this.world = new World()
+        this.menu = new Menu()
         
         this.sizes.on("resize", () => {
             this.resize()
@@ -41,6 +49,33 @@ export default class Game {
         })
     }
 
+    start() {
+        // asdasd
+        this.isStarted = true
+        this.isEnded = false
+        this.isPasued = false
+
+        this.gameTimer.start()
+        this.world.reset()
+    }
+
+    pause() {
+        this.isPasued = true
+    }
+
+    continue() {
+        this.isPasued = false
+    }
+
+    end() {
+        this.isEnded = true
+        this.menu.showEndMenu()
+    }
+
+    isPlaying() {
+        return this.isStarted && !this.isPasued && !this.isEnded
+    }
+
     // We call resize here, to be able to control the order
     resize() {
         this.camera.resize()
@@ -48,8 +83,11 @@ export default class Game {
     }
 
     update() {
-        this.physics.update()
-        this.world.update()
+        if (this.isPlaying()) {
+            this.physics.update()
+            this.world.update()
+            this.gameTimer.update()
+        }
 
         this.camera.update(this.world.player.sleigh.group.position)
         this.renderer.update()

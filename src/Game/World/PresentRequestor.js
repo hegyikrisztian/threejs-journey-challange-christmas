@@ -43,8 +43,6 @@ export default class PresentRequestor {
                 house.isRecievingPresents = true
                 house.requestedPresentsCount = 1 + Math.trunc(Math.random() * 6)
             }
-
-            console.log("I'm a new house requesting ", house.requestedPresentsCount);
         }
 
         this.houses.forEach(h => h.isRecievingPresents && h.update())

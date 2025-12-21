@@ -41,6 +41,9 @@ export default class Environment {
         this.directionalLight.position.x = -6;
         this.directionalLight.position.y = 2;
         this.directionalLight.castShadow = true;
+        // this.directionalLight.shadow.radius = 100
+        // this.directionalLight.shadow.mapSize.width = 1024
+        // this.directionalLight.shadow.mapSize.height = 1024
         this.scene.add(this.directionalLight);
 
         if (this.debug.active) {
