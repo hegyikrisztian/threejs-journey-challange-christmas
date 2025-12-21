@@ -36,9 +36,9 @@ export default class Game {
         this.renderer = new Renderer()
         this.environment = new Environment()
         this.physics = new PhysicalWorld()
+        this.menu = new Menu()
         this.inputs = new Inputs()
         this.world = new World()
-        this.menu = new Menu()
         
         this.sizes.on("resize", () => {
             this.resize()

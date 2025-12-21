@@ -8,8 +8,6 @@ export default class Menu {
 
         this.game = new Game()
         this.gameTimer = this.game.gameTimer
-        this.world = this.game.world
-        this.player = this.world.player
         
         this.playButtonElement = document.querySelector(".btn-play")
         this.continueButtonElement = document.querySelector(".btn-continue")
@@ -17,7 +15,6 @@ export default class Menu {
         this.playAgainButtonElement = document.querySelector(".end-menu-wrapper > button")
 
         this.setPlayButton()
-        this.setPause()
         this.setContinueButton()
         this.setPlayAgainButton()
     }
@@ -69,7 +66,7 @@ export default class Menu {
             throw new Error("Wrong parameters for handleMenu")
         }
 
-        const _translateY = action == "show" ? -60 : 500
+        const _translateY = action == "show" ? -60 : 1000
         gsap.to(
             target,
             {
@@ -89,18 +86,6 @@ export default class Menu {
             this.game.start()            
         }
     }
-    
-    // Pause
-    setPause() {
-        window.addEventListener("keydown", (event) => {
-            if (event.code == "Escape" && this.game.isPlaying()) {
-                this.showBackdrop()
-                this.handleMenu(".pause-menu-wrapper", "show")
-
-                this.game.pause()
-            }
-        })
-    }
 
     // Continue
     setContinueButton() {
@@ -113,11 +98,11 @@ export default class Menu {
     }
 
     // End
-    showEndMenu() {
+    showEndMenu(deliveredPresents) {
         this.showBackdrop()
         this.handleMenu(".end-menu-wrapper", "show")
 
-        this.endMenuElement.innerHTML = `You delivered ${this.player.deliveredPresentsCount} presents!`
+        this.endMenuElement.innerHTML = `You delivered ${deliveredPresents} presents!`
     }
 
     // Play again
