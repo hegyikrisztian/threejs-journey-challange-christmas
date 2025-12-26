@@ -10,7 +10,9 @@ import Environment from "./World/Environment"
 import World from "./World/World"
 import GameTimer from "./GameTimer"
 import Menu from "./Menu"
-
+import Resources from "./Utils/Resources"
+import sources from "./sources"
+console.log(sources);
 
 export default class Game {
 
@@ -30,6 +32,7 @@ export default class Game {
         this.debug = new Debug()
         this.sizes = new Sizes()
         this.scene = new THREE.Scene()
+        this.resources = new Resources(sources)
         this.camera = new Camera()
         this.time = new Time()
         this.gameTimer = new GameTimer()

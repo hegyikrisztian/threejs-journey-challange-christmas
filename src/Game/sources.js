@@ -1,7 +1,12 @@
-[
+export default [
     {
-        path: "/",
-        name: "test_source",
-        loader: "textureLoader"
+        path: "/models/fence_colliders.glb",
+        name: "fenceColliders",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/fence.glb",
+        name: "fence",
+        loader: "gltfLoader"
     }
 ]

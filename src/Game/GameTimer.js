@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import Game from "./Game";
 
 
@@ -12,6 +13,7 @@ export default class GameTimer {
         this.isEnded = false
 
         this.gameTimerElement = document.querySelector(".game-time")
+        this.bonusTimeElement = document.querySelector(".bonus-time")
         this.interval = null
     }
     
@@ -31,7 +33,26 @@ export default class GameTimer {
     }
 
     addTime(seconds) {
+        this.bonusTimeElement.innerHTML = `+${seconds}`
         this.gameTimeSeconds += seconds
+        
+        gsap.set(
+            ".bonus-time",
+            {
+                opacity: 1,
+                transform: "unset"
+            }
+        )
+
+        gsap.to(
+            ".bonus-time",
+            {
+                opacity: 0,
+                translateY: 60,
+                duration: 0.7,
+                ease: "back.inOut"
+            }
+        )
     }
 
     reset() {

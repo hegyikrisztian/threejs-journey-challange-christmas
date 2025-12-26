@@ -158,27 +158,9 @@ export default class House {
         if (this.requestedPresentsCount == this.recievedPresentsCount) {
             this.resetScoreboard()
             
-            gsap.set(
-                ".bonus-time",
-                {
-                    opacity: 1,
-                    transform: "unset"
-                }
-            )
-
-            gsap.to(
-                ".bonus-time",
-                {
-                    opacity: 0,
-                    translateY: 60,
-                    duration: 0.7,
-                    delay: 0.2,
-                    ease: "back.inOut"
-                }
-            )
-
             // Add time to game timer
-            this.gameTimer.addTime(6)
+            const bonusTime = Math.ceil(this.requestedPresentsCount * 1.5) + 1
+            this.gameTimer.addTime(bonusTime)
 
             // Reset
             this.isRecievingPresents = false
