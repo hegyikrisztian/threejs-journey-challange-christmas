@@ -26,14 +26,27 @@ export default class Camera {
             0.1,
             100
         )
-        this.instance.position.set(-7, 6, 0)
-        this.game.scene.add(this.instance)
-    }
 
+        this.instance.position.set(
+            23.729944309933504,
+            24.801366224889936,
+            -3.6661673624612012
+        )
+
+        this.game.scene.add(this.instance)
+
+    }
+    
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
         this.controls.enableDamping = true
-
+        this.controls.target.set(
+            1.0557824180310982,
+            -0.0003467863887977371,
+            -3.30281204177889
+        )
+        this.controls.update()
+        
         if (this.debug.active) {
             this.debugFolder.add(this.controls, "enabled")
         }
@@ -44,21 +57,9 @@ export default class Camera {
         this.instance.updateProjectionMatrix()
     }
 
-    update(sleighPosition) {
+    update() {
         if (this.controls.enabled) {
             this.controls.update()
-        }
-        else {
-
-            // Follow the player
-            const _newPosition = new THREE.Vector3(
-                sleighPosition.x - 6,
-                sleighPosition.y + 6,
-                sleighPosition.z
-            )
-
-            this.instance.position.copy(_newPosition)
-            this.instance.lookAt(sleighPosition)
         }
     }
 }

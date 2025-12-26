@@ -35,7 +35,7 @@ export default class Ground {
         this.mesh.scale.x = 16
         this.mesh.scale.y = 8
 
-        this.scene.add(this.mesh)
+        // this.scene.add(this.mesh)
     }
 
     setPhysical() {

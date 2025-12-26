@@ -4,6 +4,8 @@ import Player from "./Player";
 import PresentRequestor from "./PresentRequestor";
 import Game from "../Game";
 import FenceColliders from "../Physics/FenceColliders";
+import Map from "./Map";
+import HouseColliders from "../Physics/HouseColliders";
 
 
 export default class World {
@@ -12,13 +14,15 @@ export default class World {
 
         this.game = new Game()
         this.ground = new Ground()
-        this.presentSpawner = new PresentSpawner()
-        this.presentRequestor = new PresentRequestor()
-        this.player = new Player(this.presentSpawner, this.presentRequestor)
         this.resources = this.game.resources
-
+        
         this.resources.on("ready", () => {
             this.fenceColliders = new FenceColliders()
+            this.houseColliders = new HouseColliders()
+            this.map = new Map()
+            this.presentSpawner = new PresentSpawner()
+            this.presentRequestor = new PresentRequestor()
+            this.player = new Player(this.presentSpawner, this.presentRequestor)
         })
 
     }

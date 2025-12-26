@@ -100,7 +100,6 @@ export default class Game {
             this.gameTimer.update()
         }
 
-        this.camera.update(this.world.player.sleigh.group.position)
         this.renderer.update()
     }
 }

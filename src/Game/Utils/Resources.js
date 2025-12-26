@@ -34,9 +34,7 @@ export default class Resources extends EventEmitter {
     }
 
     startLoading() {
-        console.log("Im here");
         for (const source of this.sources) {
-            console.log(source);
             this.loaders[source.loader].load(
                 source.path,
                 (file) => {

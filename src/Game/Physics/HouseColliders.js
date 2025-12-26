@@ -5,14 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 import Fence from '../World/Fence';
 
 
-export default class FenceColliders {
+export default class HouseColliders {
 
     constructor() {
         
         this.game = new Game()
         this.scene = this.game.scene
         this.resources = this.game.resources
-        this.resource = this.resources.items.fenceColliders
+        this.resource = this.resources.items.houseColliders
         this.physicalWorld = this.game.physics
 
         this.setColliders()
@@ -21,7 +21,7 @@ export default class FenceColliders {
     setColliders() {
 
         this.resource.scene.traverse((child) => {
-            if (child.isMesh && child.name.includes("fencecollider")) {
+            if (child.isMesh && child.name.includes("house_collider")) {
 
                 // Get geometry bounding box (local space)
                 child.geometry.computeBoundingBox()
@@ -49,11 +49,7 @@ export default class FenceColliders {
                 body.position.copy(worldPosition)
                 body.quaternion.copy(worldQuaternion)
         
-                this.physicalWorld.addBody(body, `fence_collider${uuidv4()}`)
-
-                // Add to scene
-                const fenceModel = new Fence(worldPosition, worldQuaternion)
-                this.scene.add(fenceModel.mesh)
+                this.physicalWorld.addBody(body, `house_collider${uuidv4()}`)
             }
         })
     }
