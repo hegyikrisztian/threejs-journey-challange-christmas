@@ -7,21 +7,29 @@ import gsap from 'gsap';
 
 export default class House {
 
-    constructor(position) {
+    constructor(position, rotation, type = 1) {
         
         if (!position.x || !position.y) {
-            throw new Error("HOuse needs (x, y) values to set position.")
+            throw new Error("House needs (x, y) values to set position.")
+        }
+
+        if (typeof type !== "number" || type < 0 || type > 3) {
+            throw new Error("House type can only be 1, 2 or 3 (number)")
         }
 
         this.game = new Game()
+        this.resources = this.game.resources
+        this.resource = this.resources.items[`house_${type}`]
+
         this.gameTimer = this.game.gameTimer
         this.scene = this.game.scene
         this.camera = this.game.camera
         this.position = new THREE.Vector3().copy({
             x: position.x,
-            y: 0.5,
-            z: position.y
+            y: position.y,
+            z: position.z
         })
+        this.rotation = rotation
         this.id = uuidv4()
 
         this.recievedPresentsCount = 0
@@ -45,27 +53,26 @@ export default class House {
         this.canvas.context.fillStyle = "white"
         this.canvas.context.strokeStyle = "white"
         
-        this.setGroup()
-        this.setGeometry()
-        this.setMaterial()
-        this.setInstance()
+        this.setModel()
+        this.setScoreboardGeometry()
+        this.setScoreboardMaterial()
+        this.setScoreboardInstance()
         this.setPhysical()
     }
-
-    setGroup() {
-        this.house = new THREE.Group()
+    
+    setModel() {
+        this.house = this.resource.scene.children[0].clone()
         this.house.position.copy(this.position)
+        this.house.rotation.copy(this.rotation)
+
         this.scene.add(this.house)
     }
 
-    setGeometry() {
-        this.topGeometry = new THREE.ConeGeometry(1.5, 0.5, 4, 1)
-        this.baseGeometry = new THREE.BoxGeometry(2, 1, 2)
+    setScoreboardGeometry() {
         this.scoreboardGeometry = new THREE.PlaneGeometry(1, 0.5)
     }
 
-    setMaterial() {
-        this.material = new THREE.MeshStandardMaterial({ color: "#382720" })
+    setScoreboardMaterial() {
         this.canvasTexture = new THREE.CanvasTexture(this.canvas.element)
         this.scoreboardMaterial = new THREE.MeshBasicMaterial({
             map: this.canvasTexture,
@@ -73,30 +80,18 @@ export default class House {
         })
     }
 
-    setInstance() {
-        this.top = new THREE.Mesh(this.topGeometry, this.material)
-        this.top.rotation.y = Math.PI * 0.25
-        this.top.position.y = 0.8
-        this.top.castShadow = true
-        this.top.recieveShadow = true
-        
-        this.base = new THREE.Mesh(this.baseGeometry, this.material)
-        this.base.castShadow = true
-        this.base.recieveShadow = true
-
+    setScoreboardInstance() {
         this.scoreboard = new THREE.Mesh(this.scoreboardGeometry, this.scoreboardMaterial)
         this.scoreboard.position.set(
             this.position.x,
-            this.position.y + 1.4,
+            5,
             this.position.z
         )
-        // this.scoreboard.scale.multiplyScalar(0)
         this.scoreboard.lookAt(this.camera.instance.position)
 
         this.scene.add(this.scoreboard)
-        this.house.add(this.top)
-        this.house.add(this.base)
     }
+
 
     setPhysical() {
         this.physical = new HouseBody(this.position, this.id)
@@ -158,27 +153,9 @@ export default class House {
         if (this.requestedPresentsCount == this.recievedPresentsCount) {
             this.resetScoreboard()
             
-            gsap.set(
-                ".bonus-time",
-                {
-                    opacity: 1,
-                    transform: "unset"
-                }
-            )
-
-            gsap.to(
-                ".bonus-time",
-                {
-                    opacity: 0,
-                    translateY: 60,
-                    duration: 0.7,
-                    delay: 0.2,
-                    ease: "back.inOut"
-                }
-            )
-
             // Add time to game timer
-            this.gameTimer.addTime(6)
+            const bonusTime = Math.ceil(this.requestedPresentsCount * 1.5) + 1
+            this.gameTimer.addTime(bonusTime)
 
             // Reset
             this.isRecievingPresents = false

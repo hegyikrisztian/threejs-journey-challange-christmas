@@ -109,7 +109,7 @@ export default class Player {
             }
             
         })
-
+        console.log(this.sleigh.group.position);
         this.sleigh.update()
     }
 }

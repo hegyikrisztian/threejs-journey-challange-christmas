@@ -1,7 +1,42 @@
-[
+export default [
     {
-        path: "/",
-        name: "test_source",
-        loader: "textureLoader"
+        path: "/models/fence_colliders.glb",
+        name: "fenceColliders",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/house_colliders.glb",
+        name: "houseColliders",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/house_positions.glb",
+        name: "housePositions",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/fence.glb",
+        name: "fence",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/environment.glb",
+        name: "environment",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/house_type_1.glb",
+        name: "house_1",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/house_type_2.glb",
+        name: "house_2",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/house_type_3.glb",
+        name: "house_3",
+        loader: "gltfLoader"
     }
 ]

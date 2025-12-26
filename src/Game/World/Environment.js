@@ -9,7 +9,7 @@ export default class Environment {
         this.game = new Game()
         this.scene = this.game.scene
         this.debug = this.game.debug
-
+        
         if (this.debug.active) {
             this.debugFolder = this.debug.ui.addFolder("Lights")
             this.debugObject = {}
