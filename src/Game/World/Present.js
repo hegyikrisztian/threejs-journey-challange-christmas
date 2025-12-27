@@ -7,40 +7,42 @@ const PRESENT_DEATH_OFFSET_MILISECONDS = 300
 const PRESENT_DEATH_OFFSET_SECONDS = PRESENT_DEATH_OFFSET_MILISECONDS / 1000
 const PRESENT_LIFE_MILISECONDS = 8000 + PRESENT_DEATH_OFFSET_MILISECONDS
 
+const typeLightColorMap = {
+    1: "#ffba3a",
+    2: "#3ad1ff"
+}
+
 export default class Present {
 
-    constructor(position) {
+    constructor(position, type = 1) {
 
-        if (!position.x || !position.y) {
+        if (typeof position.x !== "number" || typeof position.y !== "number") {
             throw new Error("Present needs (x, y) values to set position.")
         }
 
+        if (typeof type !== "number" || type < 0 || type > 2) {
+            throw new Error("House type can only be 1, 2 (number)")
+        }
+
         this.game = new Game()
+        this.resources = this.game.resources
+        this.resource = this.resources.items[`present_${type}`]
         this.scene = this.game.scene
         this.time = this.game.time
         this.position = position
         
+        this.type = type
         this.alive = true
         this.start = Date.now()
         this.elapsed = Date.now()
         this.pickable = true
 
-        this.setGeometry()
-        this.setMaterial()
-        this.setInstance(position)
+        this.setModel(position)
 
     }
 
-    setGeometry() {
-        this.geometry = new THREE.BoxGeometry(0.4, 0.4, 0.4)
-    }
-
-    setMaterial() {
-        this.material = new THREE.MeshStandardMaterial({ color: "red" })
-    }
-
-    setInstance(position) {
-        this.mesh = new THREE.Mesh(this.geometry, this.material)
+    setModel(position) {
+        this.mesh = this.resource.scene.children[0].clone()
 
         const _position = new THREE.Vector3(
             position.x,
@@ -50,12 +52,33 @@ export default class Present {
         this.mesh.position.copy(_position)
         this.mesh.scale.multiplyScalar(0)
 
+        // Light model
+        this.pointLight = new THREE.PointLight(typeLightColorMap[this.type], 0)
+        this.pointLight.position.set(
+            position.x,
+            this.type === 1 ? 0.8 : 1,
+            position.y
+        )
+        
+        this.scene.add(this.pointLight)
         this.scene.add(this.mesh)
     }
 
     destroy() {
         this.pickable = false
         
+        gsap.to(
+            this.pointLight,
+            {
+                intensity: 0,
+                duration: PRESENT_DEATH_OFFSET_SECONDS,
+                ease: "linear",
+                onComplete: () => {
+                    this.scene.remove(this.pointLight)
+                }
+            }
+        )
+
         gsap.to(
             this.mesh.scale,
             {
@@ -65,10 +88,22 @@ export default class Present {
                 duration: PRESENT_DEATH_OFFSET_SECONDS,
                 ease: "linear",
                 onComplete: () => {
-                    this.geometry.dispose()
-                    this.material.dispose()
+                    // Properly dispose of geometries and materials
+                    this.mesh.traverse((child) => {
+                        if (child.isMesh) {
+                            if (child.geometry) child.geometry.dispose()
+                            
+                            if (child.material) {
+                                if (Array.isArray(child.material)) {
+                                    child.material.forEach(material => material.dispose())
+                                } else {
+                                    child.material.dispose()
+                                }
+                            }
+                        }
+                    })
+
                     this.scene.remove(this.mesh)
-                    
                     this.alive = false
                 }
             }
@@ -97,6 +132,17 @@ export default class Present {
 
             this.mesh.rotation.y = elapsedTimeSeconds
             this.mesh.position.y = Math.sin(elapsedTimeSeconds * 3) * 0.1 + 0.4
+
+            if (this.pointLight.intensity === 0) {
+                gsap.to(
+                    this.pointLight,
+                    {
+                        intensity: 0.7,
+                        duration: PRESENT_DEATH_OFFSET_SECONDS,
+                        ease: "linear",
+                    }
+                )
+            }
         }
 
         this.elapsed = Date.now()

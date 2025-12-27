@@ -17,7 +17,7 @@ export default class Ground {
     }
     
     setGeometry() {
-        this.geometry = new THREE.PlaneGeometry(5, 5)
+        this.geometry = new THREE.PlaneGeometry(1, 1)
     }
     
     setMaterial() {
@@ -34,7 +34,7 @@ export default class Ground {
         this.mesh.rotation.x = -Math.PI * 0.5
         this.mesh.scale.x = 16
         this.mesh.scale.y = 8
-
+        
         // this.scene.add(this.mesh)
     }
 

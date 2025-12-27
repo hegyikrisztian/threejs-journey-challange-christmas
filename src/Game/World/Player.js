@@ -24,20 +24,14 @@ export default class Player {
 
                 this.worldHouses.forEach(_house => {
 
-                    // Use the house base for calculations
-                    // TODO* use house.model when model is in
-                    const houseVicinityThresholdX = 2
-                    const houseVicinityThresholdZ = 2
-
-                    const minX = _house.house.position.x - houseVicinityThresholdX
-                    const maxX = _house.house.position.x + houseVicinityThresholdX
-                    const isInVicinityX = this.sleigh.group.position.x >= minX && this.sleigh.group.position.x <= maxX
-
-                    const minZ = _house.house.position.z - houseVicinityThresholdZ
-                    const maxZ = _house.house.position.z + houseVicinityThresholdZ
-                    const isInVicinityZ = this.sleigh.group.position.z >= minZ && this.sleigh.group.position.z <= maxZ
-
-                    const isInVicinity = isInVicinityX && isInVicinityZ
+                    // Use circular vicinity check - larger radius for type 3 houses
+                    const houseVicinityRadius = _house.type === 3 ? 4 : 2.5
+                    
+                    const dx = this.sleigh.group.position.x - _house.house.position.x
+                    const dz = this.sleigh.group.position.z - _house.house.position.z
+                    const distance = Math.sqrt(dx * dx + dz * dz)
+                    
+                    const isInVicinity = distance <= houseVicinityRadius
                     
                     if (_house.isRecievingPresents && isInVicinity) {
 
@@ -109,7 +103,7 @@ export default class Player {
             }
             
         })
-        console.log(this.sleigh.group.position);
+        
         this.sleigh.update()
     }
 }

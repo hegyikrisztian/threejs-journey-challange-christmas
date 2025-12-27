@@ -12,7 +12,7 @@ import GameTimer from "./GameTimer"
 import Menu from "./Menu"
 import Resources from "./Utils/Resources"
 import sources from "./sources"
-console.log(sources);
+
 
 export default class Game {
 
@@ -100,6 +100,7 @@ export default class Game {
             this.gameTimer.update()
         }
 
+        console.log(this.camera.instance.position);
         this.renderer.update()
     }
 }

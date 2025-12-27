@@ -25,7 +25,6 @@ export default class PresentRequestor {
         const positions = this.housePositionsResource.scene.children
         positions.forEach((_empty) => {
             const position = _empty.position.clone()
-            console.log(position);
             const rotation = _empty.rotation
 
             const nameComponents = _empty.name.split("_")
