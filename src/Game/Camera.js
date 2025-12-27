@@ -28,9 +28,9 @@ export default class Camera {
         )
 
         this.instance.position.set(
-            23.729944309933504,
-            24.801366224889936,
-            -3.6661673624612012
+            26.598099318321367,
+            28.142979754453382,
+            -3.7748956283642405
         )
 
         this.game.scene.add(this.instance)

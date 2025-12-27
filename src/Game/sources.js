@@ -38,5 +38,20 @@ export default [
         path: "/models/house_type_3.glb",
         name: "house_3",
         loader: "gltfLoader"
+    },
+    {
+        path: "/models/present_spawns.glb",
+        name: "presentSpawns",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/present_type_1.glb",
+        name: "present_1",
+        loader: "gltfLoader"
+    },
+    {
+        path: "/models/present_type_2.glb",
+        name: "present_2",
+        loader: "gltfLoader"
     }
 ]

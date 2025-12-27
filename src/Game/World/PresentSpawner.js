@@ -3,86 +3,35 @@ import Game from '../Game'
 import Present from './Present'
 
 
-const SPAWN_INTERVAL = 600
+const SPAWN_INTERVAL = 400
 
 export default class PresentSpawner {
 
     constructor() {
         
         this.game = new Game()
+        this.resources = this.game.resources
+        this.resource = this.resources.items.presentSpawns
+        
         this.elapsed = 0
 
         this.presents = []
-        this.possiblePositions = [
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 8)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 9)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(2, 4)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 8)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 8)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 2)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 3)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(8, 1)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 8)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(5, 3)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(5, 5)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 1)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 1)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(1, 2)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(6, 1)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(6, 2)
-            },
-            {
-                available: true,
-                vector: new THREE.Vector2(6, 3)
-            },
-        ]
+        this.possiblePositions = []
+
+        this.setSpawnLocations()
+    }
+
+    setSpawnLocations() {
+        const spawnPoints = this.resource.scene
+
+        spawnPoints.children.forEach((_empty) => {
+            this.possiblePositions.push(
+                {
+                    available: true,
+                    vector: new THREE.Vector2(_empty.position.x, _empty.position.z)
+                }
+            )
+        })
     }
 
     update() {
@@ -99,7 +48,10 @@ export default class PresentSpawner {
 
             const availablePosition = this.possiblePositions.find((p, i) => p.available && i == randIndex)
             if (availablePosition) {
-                this.presents.push(new Present(availablePosition.vector))
+
+                const randomType = Math.round(Math.random() + 1)
+                
+                this.presents.push(new Present(availablePosition.vector, randomType))
                 availablePosition.available = false
             }
         }

@@ -16,11 +16,11 @@ export default class Environment {
         }
 
         this.setAmbientLight()
-        this.setDirectionalLight()
+        // this.setDirectionalLight()
     }
 
     setAmbientLight() {
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
         this.scene.add(this.ambientLight);
 
         if (this.debug.active) {
@@ -33,6 +33,10 @@ export default class Environment {
                     this.ambientLight.color.set(this.debugObject.ambientLightColor)
                 })
         }
+
+        this.pointLight = new THREE.PointLight(0xffffff, 10)
+        this.pointLight.position.y = 3
+        this.scene.add(this.pointLight)
     }
 
     setDirectionalLight() {
@@ -41,9 +45,23 @@ export default class Environment {
         this.directionalLight.position.x = -6;
         this.directionalLight.position.y = 2;
         this.directionalLight.castShadow = true;
-        // this.directionalLight.shadow.radius = 100
-        // this.directionalLight.shadow.mapSize.width = 1024
-        // this.directionalLight.shadow.mapSize.height = 1024
+        
+        // Configure shadow camera to cover your map area
+        this.directionalLight.shadow.camera.top = 20
+        this.directionalLight.shadow.camera.right = 20
+        this.directionalLight.shadow.camera.bottom = -20
+        this.directionalLight.shadow.camera.left = -20
+        this.directionalLight.shadow.camera.near = 0.1
+        this.directionalLight.shadow.camera.far = 40
+        
+        // Higher resolution for better shadow quality
+        this.directionalLight.shadow.mapSize.width = 2048
+        this.directionalLight.shadow.mapSize.height = 2048
+        
+        // Reduce shadow bias for better self-shadowing
+        this.directionalLight.shadow.bias = -0.0001
+        this.directionalLight.shadow.normalBias = 0.02
+        
         this.scene.add(this.directionalLight);
 
         if (this.debug.active) {
