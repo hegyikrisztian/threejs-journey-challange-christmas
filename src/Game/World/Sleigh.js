@@ -11,8 +11,14 @@ export default class Sleigh extends EventEmitter {
         super()
 
         this.game = new Game()
+        this.resources = this.game.resources
         this.inputs = this.game.inputs
         this.scene = this.game.scene
+
+        // Models
+        this.chassyResource = this.resources.items.chassy
+        this.runnerLeftResource = this.resources.items.runnerLeft
+        this.runnerRightResource = this.resources.items.runnerRight
 
         this.setGroup()
         this.setChassy()
@@ -24,39 +30,26 @@ export default class Sleigh extends EventEmitter {
 
     setGroup() {
         this.group = new THREE.Group()
-
         this.scene.add(this.group)
     }
 
     setChassy() {
-        this.chassy = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 0.3, 0.5),
-            new THREE.MeshNormalMaterial({}),
-        )
-        this.chassy.castShadow = true
-        this.chassy.position.set(0, 0.15, 0)
+        this.chassy = this.chassyResource.scene.children[0].clone()
+        this.chassy.position.set(0, 0.35, 0)
 
         this.group.add(this.chassy)
     }
 
     setRightRunner() {
-        this.rightRunner = new THREE.Mesh(
-            new THREE.BoxGeometry(1.1, 0.1, 0.14),
-            new THREE.MeshNormalMaterial({}),
-        )
-        this.rightRunner.castShadow = true;
-        this.rightRunner.position.set(0, 0.05, 0.21)
-
+        this.rightRunner = this.runnerRightResource.scene.children[0].clone()
+        this.rightRunner.position.set(-0.11, 0.15, -0.2)
+        
         this.group.add(this.rightRunner)
     }
-
+    
     setLeftRunner() {
-        this.leftRunner = new THREE.Mesh(
-            new THREE.BoxGeometry(1.1, 0.1, 0.14),
-            new THREE.MeshNormalMaterial({}),
-        )
-        this.leftRunner.castShadow = true
-        this.leftRunner.position.set(0, 0.05, -0.21)
+        this.leftRunner = this.runnerLeftResource.scene.children[0].clone()
+        this.leftRunner.position.set(-0.11, 0.15, 0.2)
 
         this.group.add(this.leftRunner)
     }

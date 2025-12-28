@@ -52,7 +52,7 @@ export default class SleighBody {
     }
 
     accelerate(magnitude) {
-        const localForward = new CANNON.Vec3(1, 0, 0)
+        const localForward = new CANNON.Vec3(-1, 0, 0)
         const worldForward = new CANNON.Vec3(0, 0, 0)
         this.body.quaternion.vmult(localForward, worldForward)
         this.body.applyForce(

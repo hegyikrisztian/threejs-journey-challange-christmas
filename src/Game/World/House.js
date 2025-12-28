@@ -100,7 +100,7 @@ export default class House {
     setScoreboardInstance() {
         this.scoreboard = new THREE.Mesh(this.scoreboardGeometry, this.scoreboardMaterial)
         
-        // Position in front of house (offset by 3 units in the direction the house faces)
+        // Position in front of house
         const offset = new THREE.Vector3(0, 0, 3)
         offset.applyEuler(this.rotation)
         
