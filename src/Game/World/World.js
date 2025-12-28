@@ -6,6 +6,7 @@ import Game from "../Game";
 import FenceColliders from "../Physics/FenceColliders";
 import Map from "./Map";
 import HouseColliders from "../Physics/HouseColliders";
+import PresentCounter from "./PresentCounter";
 
 
 export default class World {
@@ -22,6 +23,7 @@ export default class World {
             this.map = new Map()
             this.presentSpawner = new PresentSpawner()
             this.presentRequestor = new PresentRequestor()
+            this.presentCounter = new PresentCounter()
             this.player = new Player(this.presentSpawner, this.presentRequestor)
         })
 
@@ -29,6 +31,7 @@ export default class World {
 
     reset() {
         this.presentRequestor.reset()
+        this.presentCounter.reset()
         this.player.reset()
     }
 

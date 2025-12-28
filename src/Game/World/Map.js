@@ -17,7 +17,6 @@ export default class Map {
         model.position.set(0, 0, 0)
         
         model.traverse((child) => {
-            console.log(child);
             if (child.isMesh) {
                 child.castShadow = true
                 child.receiveShadow = true

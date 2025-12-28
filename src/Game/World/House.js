@@ -36,26 +36,8 @@ export default class House {
         this.recievedPresentsCount = 0
         this.requestedPresentsCount = 0
         this.isRecievingPresents = false
-        this.canvas = {}
-        this.canvas.element = document.createElement("canvas")
-        
-        this.canvas.element.id = `canvas_${this.id}`
-        this.canvas.element.width = 500
-        this.canvas.element.height = 250
-        this.canvas.element.style.position = 'fixed'
-        this.canvas.element.style.width = '160px'
-        this.canvas.element.style.height = '80px'
-        this.canvas.element.style.top = 0
-        this.canvas.element.style.left = 0
-        this.canvas.element.style.zIndex = 10
 
-        this.canvas.context = this.canvas.element.getContext("2d")
-        this.canvas.context.font = "250px Titan One, sans-serif"
-        this.canvas.context.fillStyle = "white"
-        this.canvas.context.strokeStyle = "black"
-        this.canvas.context.lineWidth = 20
-        this.canvas.context.lineJoin = "round"
-        
+        this.setCanvas()
         this.setModel()
         this.setSpotlight()
         this.setScoreboardGeometry()
@@ -64,6 +46,22 @@ export default class House {
         this.setPhysical()
     }
     
+    setCanvas() {
+        this.canvas = {}
+        this.canvas.element = document.createElement("canvas")
+        
+        this.canvas.element.id = `canvas_${this.id}`
+        this.canvas.element.width = 500
+        this.canvas.element.height = 250
+    
+        this.canvas.context = this.canvas.element.getContext("2d")
+        this.canvas.context.font = "250px Titan One, sans-serif"
+        this.canvas.context.fillStyle = "white"
+        this.canvas.context.strokeStyle = "black"
+        this.canvas.context.lineWidth = 20
+        this.canvas.context.lineJoin = "round"
+    }
+
     setModel() {
         this.house = this.resource.scene.children[0].clone()
         this.house.position.copy(this.position)
