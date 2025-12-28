@@ -7,15 +7,16 @@ const PRESENT_VICINITY_THRESHOLD = 1
 
 export default class Player {
 
-    constructor(presentSpawner, presentRequestor) {
+    constructor(presentSpawner, presentRequestor, presentCounter) {
         
         this.game = new Game()
+        this.world = this.game.world
         this.worldPresents = presentSpawner.presents
         this.worldHouses = presentRequestor.houses
+        this.presentCounter = this.world.presentCounter
         this.sleigh = new Sleigh()
         this.ownedPresentsCount = 0
         this.deliveredPresentsCount = 0
-        this.presentCounterElement = document.querySelector(".owned-presents-counter > p")
         
         // Deliver presents
         window.addEventListener("keypress", (event) => {
@@ -65,7 +66,7 @@ export default class Player {
                         this.deliveredPresentsCount += availablePresents
 
                         this.ownedPresentsCount -= availablePresents
-                        this.presentCounterElement.innerHTML = this.ownedPresentsCount
+                        this.presentCounter.setCounter(this.ownedPresentsCount)
                     }
                     
                 })
@@ -80,7 +81,6 @@ export default class Player {
         this.sleigh.physical.body.position.set(0, 0, 0)
         this.ownedPresentsCount = 0
         this.deliveredPresentsCount = 0
-        this.presentCounterElement.innerHTML = 0
     }
 
     update() {
@@ -98,7 +98,8 @@ export default class Player {
             
             if (_present.pickable && isInVicinity) {
                 this.ownedPresentsCount++
-                this.presentCounterElement.innerHTML = this.ownedPresentsCount
+                this.presentCounter.setCounter(this.ownedPresentsCount)
+
                 _present.destroy()
             }
             

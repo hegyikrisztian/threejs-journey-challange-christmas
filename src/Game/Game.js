@@ -100,7 +100,6 @@ export default class Game {
             this.gameTimer.update()
         }
 
-        console.log(this.camera.instance.position);
         this.renderer.update()
     }
 }

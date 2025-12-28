@@ -69,4 +69,9 @@ export default [
         name: "runnerRight",
         loader: "gltfLoader"
     },
+    {
+        path: "/models/present_counter.glb",
+        name: "presentCounter",
+        loader: "gltfLoader"
+    },
 ]
