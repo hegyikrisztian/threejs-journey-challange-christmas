@@ -88,6 +88,9 @@ export default class Menu {
     // Start
     setPlayButton() {
         this.playButtonElement.onclick = () => {
+            
+            this.audioElement.play().catch(err => console.log('Audio play failed:', err))
+            
             this.handleMenu(".menu-wrapper", "hide")
             this.hideBackdrop()
 
