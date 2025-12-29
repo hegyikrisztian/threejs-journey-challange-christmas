@@ -10,9 +10,9 @@ export default class Ground {
         this.game = new Game()
         this.scene = this.game.scene
         
-        this.setGeometry()
-        this.setMaterial()
-        this.setMesh()
+        // this.setGeometry()
+        // this.setMaterial()
+        // this.setMesh()
         this.setPhysical()
     }
     

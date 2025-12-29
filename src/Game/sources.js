@@ -74,4 +74,14 @@ export default [
         name: "presentCounter",
         loader: "gltfLoader"
     },
+    {
+        path: "/images/snowflake.png",
+        name: "snowFlakeTexture",
+        loader: "textureLoader"
+    },
+    {
+        path: "/models/point_light_positions.glb",
+        name: "pointLightPositions",
+        loader: "gltfLoader"
+    },
 ]

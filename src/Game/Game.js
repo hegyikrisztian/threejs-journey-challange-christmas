@@ -12,6 +12,7 @@ import GameTimer from "./GameTimer"
 import Menu from "./Menu"
 import Resources from "./Utils/Resources"
 import sources from "./sources"
+import Effects from "./Effects/Effects"
 
 
 export default class Game {
@@ -37,12 +38,16 @@ export default class Game {
         this.time = new Time()
         this.gameTimer = new GameTimer()
         this.renderer = new Renderer()
-        this.environment = new Environment()
         this.physics = new PhysicalWorld()
         this.menu = new Menu()
         this.inputs = new Inputs()
         this.world = new World()
+        this.effectComposer = new Effects()
         
+        this.resources.on("ready", () => {
+            this.environment = new Environment()
+        })
+
         this.sizes.on("resize", () => {
             this.resize()
         })
@@ -91,6 +96,7 @@ export default class Game {
     resize() {
         this.camera.resize()
         this.renderer.resize()
+        this.effectComposer.resize()
     }
 
     update() {
@@ -100,6 +106,6 @@ export default class Game {
             this.gameTimer.update()
         }
 
-        this.renderer.update()
+        this.effectComposer.update()
     }
 }

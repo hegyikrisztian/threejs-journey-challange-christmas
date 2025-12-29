@@ -93,7 +93,7 @@ export default class PresentCounter {
     }
 
     setSpotlight() {
-        this.spotlight = new THREE.SpotLight("#ffd381ff", 12, 5, Math.PI / 4, 0)
+        this.spotlight = new THREE.SpotLight("#ffd381", 12, 5, Math.PI / 4, 0)
         this.spotlight.lookAt(this.counter.position)
         this.spotlight.position.set(
             this.counter.position.x + 1,

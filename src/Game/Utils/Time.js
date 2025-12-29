@@ -10,7 +10,7 @@ export default class Time extends EventEmitter {
         this.start = Date.now()
         this.current = this.start
         this.elapsed = 0
-        this.delta = 7  // Starting at 0 can cause bugs
+        this.delta = 0.016  // ~60fps in seconds
 
         window.requestAnimationFrame(() => {
             this.tick()
@@ -19,7 +19,7 @@ export default class Time extends EventEmitter {
 
     tick() {
         const currentTime = Date.now()
-        this.delta = currentTime - this.current
+        this.delta = (currentTime - this.current) / 1000  // Convert to seconds
         this.current = currentTime
         this.elapsed = this.current - this.start
 
