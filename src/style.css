@@ -4,6 +4,13 @@ body, html {
   overflow: hidden;
 }
 
+* {
+  font-family: "Titan One", sans-serif;
+  color: white;
+  font-weight: 400;
+  font-style: normal;
+}
+
 #webgl {
   width: 100vw;
   height: 100vh;
@@ -21,19 +28,14 @@ body, html {
 }
 
 .game-time {
-  font-size: 60px;
-  font-family: "Titan One", sans-serif;
+  font-size: 100px;
   color: #ffffff;
-  font-weight: 400;
-  font-style: normal;
   text-shadow: 5px 5px 0px rgba(72, 117, 131, 0.753);
 }
 
 .bonus-time {
-  font-size: 60px;
-  font-family: "Titan One", sans-serif;
+  font-size: 100px;
   color: #ffffff;
-  font-weight: 400;
   opacity: 0;
   text-shadow: 5px 5px 0px rgba(72, 117, 131, 0.753);
 }
@@ -50,16 +52,55 @@ body, html {
   padding: 0;
 }
 
-.menu-wrapper {
+.tutorial-menu-wrapper {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
   z-index: 2;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -60%);
-  font-family: "Titan One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  transform: translate(-50%, 1000%);
+  font-size: 30px;
+}
+
+.tutorial-menu-wrapper > p {
+  margin: 10px;
+}
+
+.tutorial-menu-wrapper > .tutorial-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.tutorial-container > section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.tutorial-container  > section > img {
+  border-radius: 20px;
+  border: 4px solid white;
+  background-size: cover;
+}
+
+.tutorial-container  > section > span {
+  padding: 10px;
+  align-self: center;
+  justify-self: center;
+}
+
+.menu-wrapper {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -200px);
 }
 
 .menu-wrapper menu {
@@ -74,14 +115,11 @@ button {
   padding-inline: 30px;
   padding-block: 10px;
   width: max-content;
-  border: 2px solid white;
+  border: 4px solid white;
   color: white;
   border-radius: 50px;
   background-color: rgba(255, 255, 255, 0.301);
-  font-size: 40px;
-  font-family: "Titan One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-size: 60px;
 }
 
 button:hover {
@@ -101,9 +139,6 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, 1000%);
-  font-family: "Titan One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
 }
 
 .pause-menu-wrapper p {
@@ -125,9 +160,6 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, 1000%);
-  font-family: "Titan One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
 }
 
 .end-menu-wrapper > p {
