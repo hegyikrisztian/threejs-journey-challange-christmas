@@ -7,7 +7,7 @@ const PRESENT_VICINITY_THRESHOLD = 1
 
 export default class Player {
 
-    constructor(presentSpawner, presentRequestor, presentCounter) {
+    constructor(presentSpawner, presentRequestor) {
         
         this.game = new Game()
         this.world = this.game.world

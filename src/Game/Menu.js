@@ -15,12 +15,16 @@ export default class Menu {
         this.playAgainButtonElement = document.querySelector(".end-menu-wrapper > button")
         this.tutorialButtonElement = document.querySelector(".btn-tutorial")
         this.tutorialBackButtonElement = document.querySelector(".tutorial-menu-wrapper > button")
+        this.audioElement = document.querySelector("#background-music")
+        this.audioElement.volume = 0.05
+        this.audioControlsButtonElement = document.querySelector(".audio-controls")
         
         this.setPlayButton()
         this.setContinueButton()
         this.setPlayAgainButton()
         this.setTutorialButton()
         this.setTutorialBackButton()
+        this.setAudioControlsButton()
     }
 
     hideBackdrop() {
@@ -137,6 +141,29 @@ export default class Menu {
         this.tutorialBackButtonElement.onclick = () => {
             this.handleMenu(".tutorial-menu-wrapper", "hide")
             this.handleMenu(".menu-wrapper", "show")
+        }
+    }
+
+    setAudioControlsButton() {
+        this.audioControlsButtonElement.onclick = () => {
+            const isMuted = this.audioControlsButtonElement.dataset.muted === "true"
+            
+            if (isMuted) {
+                this.audioElement.muted = false
+                this.audioElement.play()
+                this.audioControlsButtonElement.style.backgroundImage = "url('/music/mute.png')"
+                this.audioControlsButtonElement.dataset.muted = "false"
+
+                // Remove focus from button
+                this.audioControlsButtonElement.blur()
+            }
+            else {
+                this.audioElement.muted = true
+                this.audioControlsButtonElement.style.backgroundImage = "url('/music/unmute.png')"
+                this.audioControlsButtonElement.dataset.muted = "true"
+
+                this.audioControlsButtonElement.blur()
+            }
         }
     }
 }
