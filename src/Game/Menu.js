@@ -13,10 +13,14 @@ export default class Menu {
         this.continueButtonElement = document.querySelector(".btn-continue")
         this.endMenuElement = document.querySelector(".end-menu-wrapper > span")
         this.playAgainButtonElement = document.querySelector(".end-menu-wrapper > button")
+        this.tutorialButtonElement = document.querySelector(".btn-tutorial")
+        this.tutorialBackButtonElement = document.querySelector(".tutorial-menu-wrapper > button")
         
         this.setPlayButton()
         this.setContinueButton()
         this.setPlayAgainButton()
+        this.setTutorialButton()
+        this.setTutorialBackButton()
     }
 
     hideBackdrop() {
@@ -66,7 +70,7 @@ export default class Menu {
             throw new Error("Wrong parameters for handleMenu")
         }
 
-        const _translateY = action == "show" ? -60 : 1000
+        const _translateY = action == "show" ? -200 : 1000
         gsap.to(
             target,
             {
@@ -119,6 +123,20 @@ export default class Menu {
             // Blur the button to remove focus
             this.playAgainButtonElement.blur()
             this.game.start()    
+        }
+    }
+
+    setTutorialButton() {
+        this.tutorialButtonElement.onclick = () => {
+            this.handleMenu(".menu-wrapper", "hide")
+            this.handleMenu(".tutorial-menu-wrapper", "show")
+        }
+    }
+
+    setTutorialBackButton() {
+        this.tutorialBackButtonElement.onclick = () => {
+            this.handleMenu(".tutorial-menu-wrapper", "hide")
+            this.handleMenu(".menu-wrapper", "show")
         }
     }
 }
