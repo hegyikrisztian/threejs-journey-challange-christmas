@@ -33,9 +33,9 @@ export default class SleighBody {
 
     setBody() {
         this.body = new CANNON.Body({
-            mass: 5,
-            angularDamping: 0.9, // damping values should be between 0-1
-            linearDamping: 0.9,
+            mass: 3.4,
+            angularDamping: 0.99, // damping values should be between 0-1
+            linearDamping: 0.99,
             position: new CANNON.Vec3(0, 3, 0),
         })
         this.body.addShape(this.chassyShape, new CANNON.Vec3(0, 0.15, 0))
@@ -54,9 +54,10 @@ export default class SleighBody {
     accelerate(magnitude) {
         const localForward = new CANNON.Vec3(-1, 0, 0)
         const worldForward = new CANNON.Vec3(0, 0, 0)
+
         this.body.quaternion.vmult(localForward, worldForward)
         this.body.applyForce(
-            worldForward.scale(magnitude),
+            worldForward.scale(magnitude * this.time.delta * 60),
             this.body.position
         )
     }
@@ -76,18 +77,18 @@ export default class SleighBody {
         
         // Controls
         if (this.inputs.getIsKeyActive(KEYS.W)) {
-            this.accelerate(20)
+            this.accelerate(65)
         }
 
         if (this.inputs.getIsKeyActive(KEYS.S)) {
-            this.accelerate(-20)
+            this.accelerate(-65)
         }
 
         if (this.inputs.getIsKeyActive(KEYS.A)) {
-            this.turn(0.1)
+            this.turn(1)
         }
         else if (this.inputs.getIsKeyActive(KEYS.D)) {
-            this.turn(-0.1)
+            this.turn(-1)
         }
         else {
             this.body.angularVelocity.y = 0

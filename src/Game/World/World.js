@@ -7,6 +7,7 @@ import FenceColliders from "../Physics/FenceColliders";
 import Map from "./Map";
 import HouseColliders from "../Physics/HouseColliders";
 import PresentCounter from "./PresentCounter";
+import SnowFall from "../Effects/SnowFall";
 
 
 export default class World {
@@ -25,6 +26,7 @@ export default class World {
             this.presentRequestor = new PresentRequestor()
             this.presentCounter = new PresentCounter()
             this.player = new Player(this.presentSpawner, this.presentRequestor)
+            this.snowFall = new SnowFall()
         })
 
     }
@@ -39,5 +41,6 @@ export default class World {
         this.presentSpawner.update()
         this.player.update()
         this.presentRequestor.update()
+        this.snowFall.update()
     }
 }

@@ -28,9 +28,9 @@ export default class Camera {
         )
 
         this.instance.position.set(
-            26.598099318321367,
-            28.142979754453382,
-            -3.7748956283642405
+            23.181431899694708,
+            25.279492539483208,
+            -4.882740747862395
         )
 
         this.game.scene.add(this.instance)
@@ -39,11 +39,12 @@ export default class Camera {
     
     setOrbitControls() {
         this.controls = new OrbitControls(this.instance, this.canvas)
+        this.controls.enabled = true
         this.controls.enableDamping = true
         this.controls.target.set(
-            1.0557824180310982,
-            -0.0003467863887977371,
-            -3.30281204177889
+            0.3,
+            0,
+            -4
         )
         this.controls.update()
         

@@ -38,13 +38,16 @@ export default class Game {
         this.time = new Time()
         this.gameTimer = new GameTimer()
         this.renderer = new Renderer()
-        this.environment = new Environment()
         this.physics = new PhysicalWorld()
         this.menu = new Menu()
         this.inputs = new Inputs()
         this.world = new World()
         this.effectComposer = new Effects()
         
+        this.resources.on("ready", () => {
+            this.environment = new Environment()
+        })
+
         this.sizes.on("resize", () => {
             this.resize()
         })
