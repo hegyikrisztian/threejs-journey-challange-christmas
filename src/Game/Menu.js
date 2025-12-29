@@ -146,22 +146,22 @@ export default class Menu {
 
     setAudioControlsButton() {
         this.audioControlsButtonElement.onclick = () => {
-            const isMuted = this.audioControlsButtonElement.dataset.muted === "true"
+            const isPlaying = this.audioControlsButtonElement.dataset.muted === "false"
             
-            if (isMuted) {
+            if (isPlaying) {
+                this.audioElement.muted = true
+                this.audioControlsButtonElement.style.backgroundImage = "url('/music/unmute.png')"
+                this.audioControlsButtonElement.dataset.muted = "true"
+    
+                this.audioControlsButtonElement.blur()
+            }
+            else {
                 this.audioElement.muted = false
                 this.audioElement.play()
                 this.audioControlsButtonElement.style.backgroundImage = "url('/music/mute.png')"
                 this.audioControlsButtonElement.dataset.muted = "false"
-
+    
                 // Remove focus from button
-                this.audioControlsButtonElement.blur()
-            }
-            else {
-                this.audioElement.muted = true
-                this.audioControlsButtonElement.style.backgroundImage = "url('/music/unmute.png')"
-                this.audioControlsButtonElement.dataset.muted = "true"
-
                 this.audioControlsButtonElement.blur()
             }
         }
