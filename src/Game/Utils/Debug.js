@@ -5,7 +5,7 @@ export default class Debug {
 
     constructor() {
         
-        this.active = window.location.hash.includes("#debug")
+        this.active = false  // window.location.hash.includes("#debug")
 
         if (this.active) {
             this.ui = new GUI({ width: 200 })
