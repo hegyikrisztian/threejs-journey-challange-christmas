@@ -25,6 +25,10 @@ The biggest challange was suprisingly the physics part. To make this sliegh move
 Also the acceleration part was a bit tricky as well, I had to calculate the current (world) forward direction of the sleigh and apply a force at center of mass in that direction.
 For it to not topple over all the time I had to make sure that the friction and restitution are both 0 for the ground and sleigh contact material.
 
+## Credits
+Icons from [Freepik](www.freepik.com)
+Background music from [Pixabay](https://pixabay.com/music/search/christmas/)
+
 ## Feedback
 If you have any suggestions or feedback feel free to reach out on [X](https://x.com/hegyikrisztian1) or Discrod
 
