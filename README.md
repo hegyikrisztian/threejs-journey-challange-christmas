@@ -19,6 +19,18 @@ https://threejs-journey.com/challenges/021-christmas-3
 - [Blender](https://www.blender.org)
 - [CANNON.JS](https://schteppe.github.io/cannon.js/)
 
+## Setup
+```
+After you cloned the repo just run
+npm install
+
+Then run the project
+npm run dev
+
+To build
+npm run build
+```
+
 ## Notes
 Altough I would like to improve this game with a lot of stuff, I'm very happy on where it landed.
 The biggest challange was suprisingly the physics part. To make this sliegh movement possible I had to revisit the physics lesson in 3jsj.
