@@ -31,5 +31,5 @@ If you have any suggestions or feedback feel free to reach out on [X](https://x.
 ## License
 2025 @ Hegyi Krisztián
 This project is under MIT License
-For more info see LICENSE
+For more info see [LICENSE](https://github.com/hegyikrisztian/threejs-journey-challange-christmas/blob/main/LICENSE)
 
