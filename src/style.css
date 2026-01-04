@@ -16,6 +16,11 @@ body, html {
   height: 100vh;
 }
 
+.socials {
+  opacity: 1;
+  font-size: 15px;
+}
+
 .game-bar-wrapper {
   display: flex;
   flex-direction: row;
