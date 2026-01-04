@@ -26,8 +26,9 @@ Also the acceleration part was a bit tricky as well, I had to calculate the curr
 For it to not topple over all the time I had to make sure that the friction and restitution are both 0 for the ground and sleigh contact material.
 
 ## Credits
-Icons from [Freepik](www.freepik.com)
-Background music from [Pixabay](https://pixabay.com/music/search/christmas/)
+- [Volume icon](https://www.freepik.com/icon/volume_8894928#fromView=search&page=1&position=7&uuid=ea77d078-67b1-4a8a-82fa-fc210081fbd7) by icon wind via Freepik
+- [Mute icon](https://www.freepik.com/icon/mute_10264286#fromView=search&page=1&position=71&uuid=0c793125-0d5f-44b1-a60c-a9206dd0eae1) by Fathema Khanom  via Freepik
+- Background music [Christmas eve whispers](https://pixabay.com/music/christmas-christmas-eve-whispers-439856/) by LP-Studio-music via Pixabay
 
 ## Feedback
 If you have any suggestions or feedback feel free to reach out on [X](https://x.com/hegyikrisztian1) or Discrod
