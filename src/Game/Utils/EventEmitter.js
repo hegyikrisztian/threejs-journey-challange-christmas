@@ -1,3 +1,5 @@
+/* EventEmitter class by Bruno Simon https://github.com/brunosimon */
+
 export default class EventEmitter
 {
     constructor()
